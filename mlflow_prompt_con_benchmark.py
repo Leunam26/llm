@@ -118,5 +118,13 @@ finally:
     cur.close()
     conn.close()
 
+    # Loggare il modello GPT4All su MLflow
+    mlflow.pyfunc.log_model(
+        artifact_path="gpt4all_model",
+        python_model=model_orca,
+        registered_model_name="GPT4All_Orca_Model"
+    )
+
+
     # Chiudi il run di MLflow
     mlflow.end_run()
