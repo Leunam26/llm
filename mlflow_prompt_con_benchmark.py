@@ -142,6 +142,5 @@ finally:
         registered_model_name="GPT4All_Orca_Model"
     )
 
-
-    # Chiudi il run di MLflow
+    # Chiudi la run di MLflow
     mlflow.end_run()
