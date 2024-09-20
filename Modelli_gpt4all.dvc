@@ -1,0 +1,6 @@
+outs:
+- md5: 550d28d3564477d0a4203451ce77ac29.dir
+  size: 1980008160
+  nfiles: 2
+  hash: md5
+  path: Modelli_gpt4all
