@@ -25,11 +25,11 @@ def connect_to_db():
     )
 
 # 1. Carica il modello locale
-model_orca = GPT4All("C:/Users/mnico/Documents/GitHub/llm/llama_ft/Modelli_gpt4all/orca-mini-3b-gguf2-q4_0.gguf")
+model_orca = GPT4All("C:/Users/mnico/Documents/GitHub/llm/Modelli_gpt4all/orca-mini-3b-gguf2-q4_0.gguf")
 
 
 # 2. Carica il benchmark SQuAD locale
-with open("C:/Users/mnico/Documents/GitHub/llm/llama_ft/Dataset/dev-v1.1.json") as f: #versione 2.0 del database (in caso provare v1.1)
+with open("C:/Users/mnico/Documents/GitHub/llm/Dataset/dev-v1.1.json") as f: #versione 2.0 del database (in caso provare v1.1)
     squad_data = json.load(f)
 
 # 3. Estrai le prime 300 domande
@@ -105,7 +105,7 @@ try:
         conn.commit()
 
         # Stampa progressiva
-        print(f"Salvati {idx} risultati su 300.")
+        print(f"Salvati {idx} risultati su 10.")
 
     print("Dati salvati con successo nel database.")
 
