@@ -80,6 +80,23 @@ def save_to_db(cur, question, context, truth, answer_orca, em_orca, f1_orca):
 conn = connect_to_db()
 cur = conn.cursor()
 
+# Define custom PythonModel class for GPT4All
+class GPT4AllPythonModel(mlflow.pyfunc.PythonModel):
+    def load_context(self, context):
+        # Load or initialize the GPT4All model here if needed
+        self.model = GPT4All("C:/Users/mnico/Documents/GitHub/llm/Modelli_gpt4all/orca-mini-3b-gguf2-q4_0.gguf")
+
+    def predict(self, context, model_input):
+        # Expect model_input to be a DataFrame with 'context' and 'question' columns
+        results = []
+        for _, row in model_input.iterrows():
+            context = row['context']
+            question = row['question']
+            prompt = f"Context: {context}\nQuestion: {question}\nAnswer:"
+            response = self.model.generate(prompt)
+            results.append(response)
+        return results
+
 try:
     # Itera sulle 300 domande del benchmark locale
     for idx, example in enumerate(squad_subset, 1):
@@ -118,10 +135,10 @@ finally:
     cur.close()
     conn.close()
 
-    # Loggare il modello GPT4All su MLflow
+    # Log the GPT4All model as an MLflow PythonModel
     mlflow.pyfunc.log_model(
         artifact_path="gpt4all_model",
-        python_model=model_orca,
+        python_model=GPT4AllPythonModel(),
         registered_model_name="GPT4All_Orca_Model"
     )
 
