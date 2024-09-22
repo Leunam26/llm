@@ -24,7 +24,7 @@ def connect_to_db():
     )
 
 # 1. Carica il modello locale
-model_orca = GPT4All("./Modelli_gpt4all/orca-mini-3b-gguf2-q4_0.gguf")
+model_orca = GPT4All("./Modelli_gpt4all/orca-mini-3b-gguf2-q4_0.gguf", allow_download=False)
 
 
 # 2. Carica il benchmark SQuAD locale
