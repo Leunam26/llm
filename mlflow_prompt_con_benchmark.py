@@ -24,11 +24,11 @@ def connect_to_db():
     )
 
 # 1. Carica il modello locale
-model_orca = GPT4All("./Modelli_gpt4all/orca-mini-3b-gguf2-q4_0.gguf", allow_download=False)
+model_orca = GPT4All("Modelli_gpt4all/orca-mini-3b-gguf2-q4_0.gguf", allow_download=False)
 
 
 # 2. Carica il benchmark SQuAD locale
-with open("./Dataset/dev-v1.1.json") as f: #versione 1.1 del database
+with open("Dataset/dev-v1.1.json") as f: #versione 1.1 del database
     squad_data = json.load(f)
 
 # 3. Estrai le prime 300 domande
