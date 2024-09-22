@@ -6,7 +6,6 @@ import statistics
 import matplotlib.pyplot as plt
 import seaborn as sns
 import mlflow
-import mlflow.keras
 
 # Set our tracking server uri for logging
 #mlflow.set_tracking_uri(uri="http://localhost:5000")
