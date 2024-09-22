@@ -46,7 +46,10 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
-      - name: Run data preprocessing
+      - name: Check model existence
+        run: ls -alh ./Modelli_gpt4all/
+
+      - name: Run Python script
         run: python mlflow_prompt_con_benchmark.py
         env:
           MLFLOW_TRACKING_URI: ${{ env.MLFLOW_TRACKING_URI }}
