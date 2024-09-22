@@ -9,7 +9,7 @@ import mlflow
 import mlflow.keras
 
 # Set our tracking server uri for logging
-mlflow.set_tracking_uri(uri="http://localhost:5000")
+#mlflow.set_tracking_uri(uri="http://localhost:5000")
 mlflow.set_experiment(experiment_name='LLM Mini Orca')
 mlflow.start_run(run_name='Run Mini Orca')
 run_id = mlflow.active_run().info.run_id
