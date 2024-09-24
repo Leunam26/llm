@@ -110,7 +110,7 @@ class GPT4AllPythonModel(mlflow.pyfunc.PythonModel):
         return results
 
 try:
-    # Itera sulle 300 domande del benchmark locale
+    # Itera sulle 10 domande del benchmark locale
     for idx, example in enumerate(squad_subset, 1):
         question = example['question']
         context = example['context']

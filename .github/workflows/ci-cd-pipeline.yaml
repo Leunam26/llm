@@ -58,7 +58,7 @@ jobs:
       - name: Build Docker image with MLflow
         run: |
           mlflow models build-docker \
-            --model-uri models:/LLM/latest \
+            --model-uri models:/GPT4All_Orca_Model/latest \
             --name LLMDocker:latest \
             --env-manager=local
         env:
