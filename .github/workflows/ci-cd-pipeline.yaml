@@ -59,7 +59,7 @@ jobs:
         run: |
           mlflow models build-docker \
             --model-uri models:/GPT4All_Orca_Model/latest \
-            --name LLMDocker:latest \
+            --name llmdocker:latest \
             --env-manager=local
         env:
           MLFLOW_TRACKING_URI: ${{ env.MLFLOW_TRACKING_URI }}
@@ -81,8 +81,8 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Tag Docker image
-        run: docker tag LLMDocker:latest ${{ secrets.DOCKER_USERNAME }}/LLMDocker:latest
+        run: docker tag llmdocker:latest ${{ secrets.DOCKER_USERNAME }}/llmdocker:latest
         
       - name: Push Docker image built by MLflow
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/LLMDocker:latest
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/llmdocker:latest
 ########################################################################
