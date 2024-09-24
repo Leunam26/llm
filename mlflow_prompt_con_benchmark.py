@@ -17,7 +17,7 @@ mlflow.set_tag("Training Info", "Run Orca su dataset SQuAD")
 # Impostare la connessione al database
 def connect_to_db():
     return psycopg2.connect(
-        host="13.60.22.210",  # "localhost" se locale
+        host="13.60.215.23",  # "localhost" se locale
         database="llm_evaluation",  # Inserisci il nome del database
         user="postgres",  # Inserisci il nome utente
         password="1234"  # Inserisci la password
