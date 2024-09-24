@@ -54,7 +54,7 @@ jobs:
         env:
           MLFLOW_TRACKING_URI: ${{ env.MLFLOW_TRACKING_URI }}
 
-#########################################################
+##########################################################
       - name: Build Docker image with MLflow
         run: |
           mlflow models build-docker \
