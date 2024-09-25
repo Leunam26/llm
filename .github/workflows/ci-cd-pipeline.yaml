@@ -24,7 +24,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install dvc[all]
-          pip install gpt4all numpy psycopg2 matplotlib seaborn mlflow
+          pip install gpt4all numpy psycopg2 matplotlib seaborn mlflow pandas
 
       - name: Configure AWS credentials
         env:
@@ -36,9 +36,9 @@ jobs:
           aws configure set default.region eu-north-1  
 # Controllare sempre che l'indirizzo IPv4 sia su run:... che su MLFLOW_TRACKING_URI:...
       - name: Set MLFlow tracking URI
-        run: echo "MLFLOW_TRACKING_URI=http://13.60.215.23:5000" >> $GITHUB_ENV
+        run: echo "MLFLOW_TRACKING_URI=http://13.61.21.87:5000" >> $GITHUB_ENV
         env:
-          MLFLOW_TRACKING_URI: http://13.60.215.23:5000
+          MLFLOW_TRACKING_URI: http://13.61.21.87:5000
         
       - name: Pull DVC data
         run: dvc pull

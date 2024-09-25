@@ -6,6 +6,7 @@ import statistics
 import matplotlib.pyplot as plt
 import seaborn as sns
 import mlflow
+import pandas as pd
 
 # Set our tracking server uri for logging
 #mlflow.set_tracking_uri(uri="http://localhost:5000")
@@ -17,7 +18,7 @@ mlflow.set_tag("Training Info", "Run Orca su dataset SQuAD")
 # Impostare la connessione al database
 def connect_to_db():
     return psycopg2.connect(
-        host="13.60.215.23",  # "localhost" se locale
+        host="13.61.21.87",  # Aggiornare con l'IPv4 dell'istanza EC2 ("localhost" se locale)
         database="llm_evaluation",  # Inserisci il nome del database
         user="postgres",  # Inserisci il nome utente
         password="1234"  # Inserisci la password
@@ -88,6 +89,16 @@ def save_to_db(cur, question, context, truth, answer_orca, em_orca, f1_orca):
         VALUES (%s, %s, %s, %s, %s, %s);
     """, (question, context, truth, answer_orca, em_orca, f1_orca))
 
+#########
+# 6.1 Funzione per salvare i risultati in un file CSV
+def save_to_csv(file_path, data):
+    df = pd.DataFrame(data)
+    df.to_csv(file_path, index=False)
+
+# Lista per salvare i risultati localmente
+results_data = []
+#########
+
 # 7. Connessione al database
 conn = connect_to_db()
 cur = conn.cursor()
@@ -130,11 +141,28 @@ try:
         # Salva i risultati nel database
         save_to_db(cur, question, context, truth, answer_orca, em_orca, f1_orca)
 
+        # Aggiungi i dati ai risultati per il file CSV/JSON
+        results_data.append({
+            'question': question,
+            'context': context,
+            'ground_truth': truth,
+            'answer_orca': answer_orca,
+            'em_orca': em_orca,
+            'f1_orca': f1_orca
+        })
+
         # Conferma l'inserimento dopo ogni iterazione
         conn.commit()
 
         # Stampa progressiva
         print(f"Salvati {idx} risultati su 10.")
+
+    # 6.3 Salva i risultati in un file CSV
+    csv_file_path = os.path.join('results', 'evaluation_results.csv')
+    save_to_csv(csv_file_path, results_data)
+
+    # Log il file CSV su MLflow come artefatto
+    mlflow.log_artifact(csv_file_path)
 
     print("Dati salvati con successo nel database.")
 
