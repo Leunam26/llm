@@ -158,7 +158,7 @@ try:
         print(f"Salvati {idx} risultati su 10.")
 
     # 6.3 Salva i risultati in un file CSV
-    csv_file_path = os.path.join('results', 'evaluation_results.csv')
+    csv_file_path = os.path.join(os.path.abspath("Results"), "evaluation_results.csv")
     save_to_csv(csv_file_path, results_data)
 
     # Log il file CSV su MLflow come artefatto
