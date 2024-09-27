@@ -22,7 +22,7 @@ mlflow.log_param("quantization", "q4_0")
 mlflow.log_param("library", "gpt4all")
     
 # Log specific run parameters
-mlflow.log_param("number_questions", 10)  # Come intero
+mlflow.log_param("number_questions", 50)  # Come intero
 mlflow.log_param("dataset", "SQuAD V1.1")
 
 # Set up the database connection
@@ -54,7 +54,7 @@ os.path.join(model_path, "orca-mini-3b-gguf2-q4_0.gguf")
 # with open("Dataset/dev-v1.1.json") as f: #versione 1.1 del database
 #    squad_data = json.load(f)
 
-# 3. Extract the first 300 questions
+# 3. Extract the first 50 questions
 squad_subset = []
 for entry in squad_data['data']:
     for paragraph in entry['paragraphs']:
@@ -64,11 +64,11 @@ for entry in squad_data['data']:
                 'question': qa['question'],
                 'answer': qa['answers'][0]['text']
             })
-            if len(squad_subset) >= 10:
+            if len(squad_subset) >=50:
                 break
-        if len(squad_subset) >= 10:
+        if len(squad_subset) >= 50:
             break
-    if len(squad_subset) >= 10:
+    if len(squad_subset) >= 50:
         break
 
 # 4. Function to ask questions to the models using gpt4all
@@ -134,7 +134,7 @@ f1_scores = []
 em_scores = []
 
 try:
-    # Iterate over the 10 questions of the local benchmark
+    # Iterate over the 50 questions of the local benchmark
     for idx, example in enumerate(squad_subset, 1):
         question = example['question']
         context = example['context']
@@ -172,7 +172,7 @@ try:
         conn.commit()
 
         # Print progress
-        print(f"Salvati {idx} risultati su 10.")
+        print(f"Salvati {idx} risultati su 50.")
 
     # Calculate the mean EM and F1
     mean_em = statistics.mean(em_scores)
