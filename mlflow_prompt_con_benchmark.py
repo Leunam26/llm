@@ -28,7 +28,7 @@ mlflow.log_param("dataset", "SQuAD V1.1")
 # Set up the database connection
 def connect_to_db():
     return psycopg2.connect(
-        host="16.171.3.97",  # Update with the EC2 instance's IPv4 address ("localhost" if local)
+        host="13.60.96.131",  # Update with the EC2 instance's IPv4 address ("localhost" if local)
         database="llm_evaluation",  # Enter the database name
         user="postgres",  # Enter the username
         password="1234"  # Enter the password
