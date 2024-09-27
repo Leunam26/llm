@@ -15,37 +15,46 @@ mlflow.start_run(run_name='Run Mini Orca')
 run_id = mlflow.active_run().info.run_id
 mlflow.set_tag("Training Info", "Run Orca su dataset SQuAD")
 
-# Impostare la connessione al database
+mlflow.log_param("model_name", "Mini Orca")
+mlflow.log_param("model_type", "LLM")
+mlflow.log_param("model_size", "3B")
+mlflow.log_param("quantization", "q4_0")
+mlflow.log_param("library", "gpt4all")
+    
+# Log specific run parameters
+mlflow.log_param("number_questions", 10)  # Come intero
+mlflow.log_param("dataset", "SQuAD V1.1")
+
+# Set up the database connection
 def connect_to_db():
     return psycopg2.connect(
-        host="13.61.21.87",  # Aggiornare con l'IPv4 dell'istanza EC2 ("localhost" se locale)
-        database="llm_evaluation",  # Inserisci il nome del database
-        user="postgres",  # Inserisci il nome utente
-        password="1234"  # Inserisci la password
+        host="16.171.3.97",  # Update with the EC2 instance's IPv4 address ("localhost" if local)
+        database="llm_evaluation",  # Enter the database name
+        user="postgres",  # Enter the username
+        password="1234"  # Enter the password
     )
 
 import os
 model_path = os.path.abspath("Modelli_gpt4all")
 dataset_path = os.path.abspath("Dataset")
 
-# Usa os.path.join per unire i percorsi
+# Use os.path.join to concatenate paths
 model_orca = GPT4All(os.path.join(model_path, "orca-mini-3b-gguf2-q4_0.gguf"), allow_download=False)
 
-
-# 1. Carica il modello locale
+# 1. Load the local model
 #model_orca = GPT4All("Modelli_gpt4all/orca-mini-3b-gguf2-q4_0.gguf", allow_download=False)
 
 
-# 2. Carica il benchmark SQuAD locale
+# 2. Load the SQuAD dataset
 with open(os.path.join(dataset_path, "dev-v1.1.json")) as f: #versione 1.1 del database
     squad_data = json.load(f)
 
 os.path.join(model_path, "orca-mini-3b-gguf2-q4_0.gguf")
 
-#with open("Dataset/dev-v1.1.json") as f: #versione 1.1 del database
+# with open("Dataset/dev-v1.1.json") as f: #versione 1.1 del database
 #    squad_data = json.load(f)
 
-# 3. Estrai le prime 300 domande
+# 3. Extract the first 300 questions
 squad_subset = []
 for entry in squad_data['data']:
     for paragraph in entry['paragraphs']:
@@ -62,13 +71,13 @@ for entry in squad_data['data']:
     if len(squad_subset) >= 10:
         break
 
-# 4. Funzione per fare domande ai modelli usando gpt4all
+# 4. Function to ask questions to the models using gpt4all
 def ask_question_gpt4all(model, question, context):
     prompt = f"Context: {context}\nQuestion: {question}\nAnswer:"
     response = model.generate(prompt)
     return response
 
-# 5. Metriche per il calcolo dell'Exact Match (EM) e F1
+# 5. Metrics for calculating Exact Match (EM) and F1
 def exact_match(pred, truth):
     return int(pred.strip().lower() == truth.strip().lower())
 
@@ -82,7 +91,7 @@ def f1(pred, truth):
     recall = len(common) / len(truth_tokens)
     return 2 * (precision * recall) / (precision + recall)
 
-# 6. Funzione per salvare i risultati nel database
+# 6. Function to save the results to the database
 def save_to_db(cur, question, context, truth, answer_orca, em_orca, f1_orca):
     cur.execute("""
         INSERT INTO evaluation_results (question, context, ground_truth, answer_orca, em_orca, f1_orca)
@@ -90,16 +99,16 @@ def save_to_db(cur, question, context, truth, answer_orca, em_orca, f1_orca):
     """, (question, context, truth, answer_orca, em_orca, f1_orca))
 
 #########
-# 6.1 Funzione per salvare i risultati in un file CSV
+# 6.1 Function to save the results to a CSV file
 def save_to_csv(file_path, data):
     df = pd.DataFrame(data)
     df.to_csv(file_path, index=False)
 
-# Lista per salvare i risultati localmente
+# List to store results locally
 results_data = []
 #########
 
-# 7. Connessione al database
+# 7. Database connection
 conn = connect_to_db()
 cur = conn.cursor()
 
@@ -120,28 +129,36 @@ class GPT4AllPythonModel(mlflow.pyfunc.PythonModel):
             results.append(response)
         return results
 
+# Lists to store EM and F1 values for each example
+f1_scores = []
+em_scores = []
+
 try:
-    # Itera sulle 10 domande del benchmark locale
+    # Iterate over the 10 questions of the local benchmark
     for idx, example in enumerate(squad_subset, 1):
         question = example['question']
         context = example['context']
         truth = example['answer']
 
-        # Ottieni risposte dai modelli
+        # Get responses from the models
         answer_orca = ask_question_gpt4all(model_orca, question, context)
 
-        # Confronta le risposte con la verità fornita (truth)
+        # Compare the responses with the provided ground truth
         em_orca = exact_match(answer_orca, truth)
         f1_orca = f1(answer_orca, truth)
 
-        # Log delle metriche su MLflow
+        # Aggiungi i valori di EM e F1 alle liste
+        em_scores.append(em_orca)
+        f1_scores.append(f1_orca)
+
+        # Log metrics to MLflow
         mlflow.log_metric("exact_match", em_orca, step=idx)
         mlflow.log_metric("f1_score", f1_orca, step=idx)
 
-        # Salva i risultati nel database
+        # Save the results to the database
         save_to_db(cur, question, context, truth, answer_orca, em_orca, f1_orca)
 
-        # Aggiungi i dati ai risultati per il file CSV/JSON
+        # Append data to the results for the CSV/JSON file
         results_data.append({
             'question': question,
             'context': context,
@@ -151,17 +168,25 @@ try:
             'f1_orca': f1_orca
         })
 
-        # Conferma l'inserimento dopo ogni iterazione
+        # Confirm the insertion after each iteration
         conn.commit()
 
-        # Stampa progressiva
+        # Print progress
         print(f"Salvati {idx} risultati su 10.")
 
-    # 6.3 Salva i risultati in un file CSV
+    # Calculate the mean EM and F1
+    mean_em = statistics.mean(em_scores)
+    mean_f1 = statistics.mean(f1_scores)
+
+    # Log the mean EM and F1 to MLflow
+    mlflow.log_metric("mean_exact_match", mean_em)
+    mlflow.log_metric("mean_f1_score", mean_f1)
+
+    # 6.3 Save the results to a CSV file
     csv_file_path = os.path.join(dataset_path, "evaluation_results.csv")
     save_to_csv(csv_file_path, results_data)
 
-    # Log il file CSV su MLflow come artefatto
+    # Log the CSV file to MLflow as an artifact
     mlflow.log_artifact(csv_file_path)
 
     print("Dati salvati con successo nel database.")
@@ -171,7 +196,7 @@ except Exception as e:
     conn.rollback()
 
 finally:
-    # Chiudi la connessione
+    # Close the connection to the Postgres database
     cur.close()
     conn.close()
 
