@@ -215,7 +215,7 @@ finally:
                         "mlflow",
                         "gpt4all",
                         "numpy",
-                        "psycopg2",
+                        "psycopg2-binary",
                         "matplotlib",
                         "seaborn",
                         "pandas"
