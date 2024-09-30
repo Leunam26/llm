@@ -28,7 +28,7 @@ mlflow.log_param("dataset", "SQuAD V1.1")
 # Set up the database connection
 def connect_to_db():
     return psycopg2.connect(
-        host="13.60.96.131",  # Update with the EC2 instance's IPv4 address ("localhost" if local)
+        host="51.20.2.17",  # Update with the EC2 instance's IPv4 address ("localhost" if local)
         database="llm_evaluation",  # Enter the database name
         user="postgres",  # Enter the username
         password="1234"  # Enter the password
@@ -204,7 +204,26 @@ finally:
     mlflow.pyfunc.log_model(
         artifact_path="gpt4all_model",
         python_model=GPT4AllPythonModel(),
-        registered_model_name="GPT4All_Orca_Model"
+        registered_model_name="GPT4All_Orca_Model",
+        conda_env={
+            "channels": ["defaults"],
+            "dependencies": [
+                "python=3.9",
+                "pip",
+                {
+                    "pip": [
+                        "mlflow",
+                        "gpt4all",
+                        "numpy",
+                        "psycopg2",
+                        "matplotlib",
+                        "seaborn",
+                        "pandas"
+                    ]
+                }
+            ],
+            "name": "gpt4all_env"
+        }
     )
 
     # Chiudi la run di MLflow

@@ -1,0 +1,8 @@
+dvc[all]
+gpt4all 
+numpy 
+psycopg2 
+matplotlib 
+seaborn 
+mlflow 
+pandas
