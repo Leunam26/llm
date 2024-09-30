@@ -115,8 +115,15 @@ cur = conn.cursor()
 # Define custom PythonModel class for GPT4All
 class GPT4AllPythonModel(mlflow.pyfunc.PythonModel):
     def load_context(self, context):
-        # Load or initialize the GPT4All model here if needed
-        self.model = GPT4All("C:/Users/mnico/Documents/GitHub/llm/Modelli_gpt4all/orca-mini-3b-gguf2-q4_0.gguf")
+        # Carica il modello dal file python_model.pkl
+        model_path = "/opt/ml/model/python_model.pkl"
+        print(f"Loading model from: {model_path}")
+        
+        try:
+            self.model = mlflow.pyfunc.load_model(model_path)
+            print("Model loaded successfully.")
+        except Exception as e:
+            print(f"Error loading model: {e}")
 
     def predict(self, context, model_input):
         # Expect model_input to be a DataFrame with 'context' and 'question' columns
