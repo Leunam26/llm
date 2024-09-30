@@ -116,7 +116,7 @@ cur = conn.cursor()
 class GPT4AllPythonModel(mlflow.pyfunc.PythonModel):
     def load_context(self, context):
         # Carica il modello dal file python_model.pkl
-        model_path = "/opt/ml/model/python_model.pkl"
+        model_path = "/opt/ml/model/"
         print(f"Loading model from: {model_path}")
         
         try:
