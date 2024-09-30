@@ -135,6 +135,12 @@ class GPT4AllPythonModel(mlflow.pyfunc.PythonModel):
             response = self.model.generate(prompt)
             results.append(response)
         return results
+    
+    def query_llm(model, context, question):
+        prompt = f"Context: {context}\nQuestion: {question}\nAnswer:"
+        response = model.generate(prompt)
+        return response
+
 
 # Lists to store EM and F1 values for each example
 f1_scores = []
