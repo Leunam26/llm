@@ -22,7 +22,7 @@ mlflow.log_param("quantization", "q4_0")
 mlflow.log_param("library", "gpt4all")
     
 # Log specific run parameters
-mlflow.log_param("number_questions", 50)
+mlflow.log_param("number_questions", 50) 
 mlflow.log_param("dataset", "SQuAD V1.1")
 
 # Set up the database connection
@@ -146,11 +146,6 @@ try:
         # Compare the responses with the provided ground truth
         em_orca = exact_match(answer_orca, truth)
         f1_orca = f1(answer_orca, truth)
-
-        # Log metrics to MLflow
-        mlflow.log_metric("exact_match", em_orca, step=idx)
-        mlflow.log_metric("f1_score", f1_orca, step=idx)
-
 
         # Aggiungi i valori di EM e F1 alle liste
         em_scores.append(em_orca)
