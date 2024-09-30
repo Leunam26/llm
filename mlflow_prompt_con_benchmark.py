@@ -10,7 +10,7 @@ import pandas as pd
 
 # Set our tracking server uri for logging
 mlflow.set_tracking_uri(uri="http://localhost:5000")
-mlflow.set_experiment(experiment_name='LLM Mini Orca')
+mlflow.set_experiment(experiment_id='556328917819400169')
 mlflow.start_run(run_name='Run Mini Orca')
 run_id = mlflow.active_run().info.run_id
 mlflow.set_tag("Training Info", "Run Orca su dataset SQuAD")
