@@ -28,7 +28,7 @@ mlflow.log_param("dataset", "SQuAD V1.1")
 # Set up the database connection
 def connect_to_db():
     return psycopg2.connect(
-        host="51.20.2.17",  # Update with the EC2 instance's IPv4 address ("localhost" if local)
+        host="13.53.41.168",  # Update with the EC2 instance's IPv4 address ("localhost" if local)
         database="llm_evaluation",  # Enter the database name
         user="postgres",  # Enter the username
         password="1234"  # Enter the password
@@ -117,11 +117,9 @@ class GPT4AllPythonModel(mlflow.pyfunc.PythonModel):
     def load_context(self, context):
         # Carica il modello dal file python_model.pkl
         model_path = "/opt/ml/model/"
-        print(f"Loading model from: {model_path}")
         
         try:
             self.model = mlflow.pyfunc.load_model(model_path)
-            print("Model loaded successfully.")
         except Exception as e:
             print(f"Error loading model: {e}")
 
@@ -136,9 +134,9 @@ class GPT4AllPythonModel(mlflow.pyfunc.PythonModel):
             results.append(response)
         return results
     
-    def query_llm(model, context, question):
+    def query_llm(self, context, question):
         prompt = f"Context: {context}\nQuestion: {question}\nAnswer:"
-        response = model.generate(prompt)
+        response = self.model.generate(prompt)
         return response
 
 
@@ -216,6 +214,7 @@ finally:
     # Log the GPT4All model as an MLflow PythonModel
     mlflow.pyfunc.log_model(
         artifact_path="gpt4all_model",
+        artifacts={"model_path": os.path.join(model_path, "orca-mini-3b-gguf2-q4_0.gguf")},
         python_model=GPT4AllPythonModel(),
         registered_model_name="GPT4All_Orca_Model",
         conda_env={
@@ -231,7 +230,8 @@ finally:
                         "psycopg2-binary",
                         "matplotlib",
                         "seaborn",
-                        "pandas"
+                        "pandas",
+                        "gguf"
                     ]
                 }
             ],
