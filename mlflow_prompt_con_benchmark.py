@@ -215,7 +215,6 @@ finally:
     mlflow.pyfunc.log_model(
         artifact_path="gpt4all_model",
         artifacts={"model_path": os.path.join(model_path, "orca-mini-3b-gguf2-q4_0.gguf")},
-        python_model=GPT4AllPythonModel(),
         registered_model_name="GPT4All_Orca_Model",
         conda_env={
             "channels": ["defaults"],
