@@ -211,7 +211,7 @@ finally:
     cur.close()
     conn.close()
 
-    # Log the GPT4All model as an MLflow PythonModel
+    # Log the GPT4All model
     mlflow.pyfunc.log_model(
         artifact_path="gpt4all_model",
         artifacts={"model_path": os.path.join(model_path, "orca-mini-3b-gguf2-q4_0.gguf")},

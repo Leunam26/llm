@@ -1,12 +1,12 @@
 name: CI/CD Pipeline LLM
 
-#on:
-#  push:
-#    branches:
-#      - master
-#  pull_request:
-#    branches:
-#      - master
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
   build:
@@ -34,7 +34,7 @@ jobs:
           aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
           aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
           aws configure set default.region eu-north-1  
-# Controllare sempre che l'indirizzo IPv4
+# Check the MLflow Tracking Uri
       - name: Set MLFlow tracking URI
         run: echo "MLFLOW_TRACKING_URI=http://13.53.41.168:5000" >> $GITHUB_ENV
         
