@@ -81,6 +81,6 @@ jobs:
       - name: Tag Docker image
         run: docker tag llmdocker:latest ${{ secrets.DOCKER_USERNAME }}/llmdocker:latest
         
-      - name: Push Docker image built by MLflow
+      - name: Push Docker image 
         run: docker push ${{ secrets.DOCKER_USERNAME }}/llmdocker:latest
 ########################################################################
