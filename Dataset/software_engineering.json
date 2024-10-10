@@ -1,0 +1,62 @@
+[
+    {
+        "id": 1,
+        "text": "\nQuestion: What are the eight quality characteristics defined in ISO 25010 ?"
+    },
+    {
+        "id": 2,
+        "text": "\nQuestion: What are the key principles of DevOps ?"
+    },
+    {
+        "id": 3,
+        "text": "\nQuestion: How does automation play a role in DevOps ?"
+    },
+    {
+        "id": 4,
+        "text": "\nQuestion: What is a Docker image, and how is it different from a Docker container ?"
+    },
+    {
+        "id": 5,
+        "text": "\nQuestion: How does Docker improve application portability ?"
+    },
+    {
+        "id": 6,
+        "text": "\nQuestion: What are the roles in a Scrum team ?"  
+    },
+    {
+        "id": 7,
+        "text": "\nQuestion: What is a Sprint, and what happens during a Sprint ?"
+    },
+    {
+        "id": 8,
+        "text": "\nQuestion:  How does the Product Backlog work in Scrum ?"
+    },
+    {
+        "id": 9,
+        "text": "\nQuestion: In the context of Devops, what is the difference between continuous integration and continuous delivery ?"
+    },
+    {
+        "id": 10,
+        "text": "\nQuestion: What are the challenges associated with adopting a microservices architecture ?"
+    },
+    {
+        "id": 11,
+        "text": "\nQuestion: What is the role of usability in ISO 25010 ?"
+    },
+    {
+        "id": 12,
+        "text": "\nQuestion: How are function points used to estimate software development effort ?"
+    },
+    {
+        "id": 13,
+        "text": "\nQuestion: What are the three basic models used in CoCoMo ?"
+    },
+    {
+        "id": 14,
+        "text": "\nQuestion: What are some common middleware technologies ?"
+    },
+    {
+        "id": 15,
+        "text": "\nQuestion: Could you write the five measurement scales of Measures and Statistics ?"
+    }
+]    
