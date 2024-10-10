@@ -7,12 +7,40 @@ import time
 import json
 from gpt4all import GPT4All
 import psycopg2
+import json
+import numpy as np
+import statistics
+import matplotlib.pyplot as plt
+import seaborn as sns
+import mlflow
+import pandas as pd
 
+
+# Set our tracking server uri for logging
+#mlflow.set_tracking_uri(uri="http://localhost:5000")
+mlflow.set_experiment(experiment_name='LLM Mini Orca')
+mlflow.start_run(run_name='Run Mini Orca RAG')
+run_id = mlflow.active_run().info.run_id
+mlflow.set_tag("Training Info", "Run Orca su dataset Software_Engineering con RAG")
+
+mlflow.log_param("model_name", "Mini Orca")
+mlflow.log_param("model_type", "LLM")
+mlflow.log_param("model_size", "3B")
+mlflow.log_param("quantization", "q4_0")
+mlflow.log_param("library", "gpt4all")
+
+# Log specific run parameters
+mlflow.log_param("number_questions", 15) 
+mlflow.log_param("Dataset", "software_engineering")
+
+import os
+model_path = os.path.abspath("Modelli_gpt4all")
+dataset_path = os.path.abspath("Dataset")
 
 
 def create_table():
     conn = psycopg2.connect(
-        host="localhost",
+        host="13.61.8.126",   # Update with the EC2 instance's IPv4 address ("localhost" if local)
         database="rag_evaluation",
         user="postgres",
         password="1234"
@@ -35,7 +63,7 @@ def create_table():
 # Funzione per salvare gradualmente le risposte nel database
 def save_to_db(result):
     conn = psycopg2.connect(
-        host="localhost",
+        host="13.61.8.126",     # Update with the EC2 instance's IPv4 address ("localhost" if local)
         database="rag_evaluation",
         user="postgres",
         password="1234"
@@ -78,15 +106,15 @@ def create_pdf_index(pdf_folder):
     index = FAISS.from_documents(documents, embeddings)
     return index
 
-pdf_index = create_pdf_index(r"C:\Users\mnico\Desktop\rag Nicola\pdf_software_engineering")
+pdf_index = create_pdf_index(os.path.join(dataset_path, "pdf_software_engineering"))
 
 # Caricamento delle domande dal file JSON
-with open(r"C:\Users\mnico\Desktop\rag Nicola\software_engineering.json") as f:
+with open(os.path.join(dataset_path, "software_engineering.json")) as f:
     questions = json.load(f)
 
 # Carica i modelli .gguf
 models = {
-    "Orca": GPT4All(r"C:\Users\mnico\Documents\GitHub\llm\Modelli_gpt4all\orca-mini-3b-gguf2-q4_0.gguf")
+    "Orca": GPT4All(os.path.join(model_path, "orca-mini-3b-gguf2-q4_0.gguf"), allow_download=False)
 }
 
 
@@ -149,6 +177,16 @@ def ask_question_to_models(models, question, pdf_index):
 # Modifica della logica di esecuzione per salvare anche i tempi
 create_table()  # Creazione della tabella nel database
 
+#########################
+# Function to save the results to a CSV file
+def save_to_csv(file_path, data):
+    df = pd.DataFrame(data)
+    df.to_csv(file_path, index=False)
+
+# List to store results locally
+results_data = []
+#########################
+
 for question in questions:
     q_id = question["id"]
     q_text = question["text"]
@@ -165,6 +203,21 @@ for question in questions:
         "orca_time": response_times.get("Orca", 0)
     }
     
+    # Log del tempo di risposta di Orca per ogni domanda come metrica su MLflow
+    mlflow.log_metric(f"orca_response_time_q{q_id}", response_times.get("Orca", 0))
+
+    # Aggiungi il risultato alla lista
+    results_data.append(result)    
+
     # Salva la risposta e i tempi nel database per la domanda corrente
     save_to_db(result)
-    print(f"Saved response and times for question ID {q_id} to the database.")  
+    print(f"Saved response and times for question ID {q_id} to the database.") 
+
+# 6.3 Save the results to a CSV file
+csv_file_path = os.path.join(dataset_path, "evaluation_results.csv")
+save_to_csv(csv_file_path, results_data)
+
+# Log the CSV file to MLflow as an artifact
+mlflow.log_artifact(csv_file_path)
+
+print("Salvati tutti i risultati su CSV.") 

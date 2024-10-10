@@ -36,7 +36,7 @@ jobs:
           aws configure set default.region eu-north-1  
 # Check the MLflow Tracking Uri
       - name: Set MLFlow tracking URI
-        run: echo "MLFLOW_TRACKING_URI=http://13.53.41.168:5000" >> $GITHUB_ENV
+        run: echo "MLFLOW_TRACKING_URI=http://13.61.8.126:5000" >> $GITHUB_ENV
         
       - name: Pull DVC data
         run: dvc pull
@@ -48,7 +48,7 @@ jobs:
         run: ls -alh ./Modelli_gpt4all/
 
       - name: Run Python script
-        run: python mlflow_prompt_con_benchmark.py
+        run: python rag_mlops.py
         env:
           MLFLOW_TRACKING_URI: ${{ env.MLFLOW_TRACKING_URI }}
 
