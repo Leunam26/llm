@@ -1,0 +1,86 @@
+name: CI/CD RAG Pipeline LLM
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11.9'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install dvc[all]
+          pip install gpt4all numpy psycopg2 matplotlib seaborn mlflow pandas
+
+      - name: Configure AWS credentials
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+          aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+          aws configure set default.region eu-north-1  
+# Check the MLflow Tracking Uri
+      - name: Set MLFlow tracking URI
+        run: echo "MLFLOW_TRACKING_URI=http://13.53.41.168:5000" >> $GITHUB_ENV
+        
+      - name: Pull DVC data
+        run: dvc pull
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Check model existence
+        run: ls -alh ./Modelli_gpt4all/
+
+      - name: Run Python script
+        run: python mlflow_prompt_con_benchmark.py
+        env:
+          MLFLOW_TRACKING_URI: ${{ env.MLFLOW_TRACKING_URI }}
+
+##########################################################
+      - name: Build Docker image with MLflow
+        run: |
+          mlflow models build-docker \
+            --model-uri models:/GPT4All_Orca_Model/latest \
+            --name llmdocker:latest \
+            --env-manager=local
+        env:
+          MLFLOW_TRACKING_URI: ${{ env.MLFLOW_TRACKING_URI }}
+##########################################################
+
+      - name: Push DVC data
+        run: dvc push
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Tag Docker image
+        run: docker tag llmdocker:latest ${{ secrets.DOCKER_USERNAME }}/llmdocker:latest
+        
+      - name: Push Docker image 
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/llmdocker:latest
+########################################################################
