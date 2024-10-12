@@ -40,7 +40,7 @@ dataset_path = os.path.abspath("Dataset")
 
 def create_table():
     conn = psycopg2.connect(
-        host="13.61.8.126",   # Update with the EC2 instance's IPv4 address ("localhost" if local)
+        host="13.51.162.134",   # Update with the EC2 instance's IPv4 address ("localhost" if local)
         database="rag_evaluation",
         user="postgres",
         password="1234"
@@ -63,7 +63,7 @@ def create_table():
 # Funzione per salvare gradualmente le risposte nel database
 def save_to_db(result):
     conn = psycopg2.connect(
-        host="13.61.8.126",     # Update with the EC2 instance's IPv4 address ("localhost" if local)
+        host="13.51.162.134",     # Update with the EC2 instance's IPv4 address ("localhost" if local)
         database="rag_evaluation",
         user="postgres",
         password="1234"
@@ -187,7 +187,7 @@ def save_to_csv(file_path, data):
 results_data = []
 #########################
 
-for question in questions:
+for idx, question in enumerate(questions, start=1):
     q_id = question["id"]
     q_text = question["text"]
     print(f"Processing Question ID: {q_id} - {q_text[:50]}...")  # Messaggio di inizio per ogni domanda
@@ -204,7 +204,7 @@ for question in questions:
     }
     
     # Log del tempo di risposta di Orca per ogni domanda come metrica su MLflow
-    mlflow.log_metric(f"orca_response_time_q{q_id}", response_times.get("Orca", 0))
+    mlflow.log_metric(f"orca_response_time_q{q_id}", response_times.get("Orca", 0), step=idx)
 
     # Aggiungi il risultato alla lista
     results_data.append(result)    
@@ -222,9 +222,27 @@ mlflow.log_artifact(csv_file_path)
 
 print("Salvati tutti i risultati su CSV.") 
 
+# Define custom PythonModel class for GPT4All
+class GPT4AllPythonModel(mlflow.pyfunc.PythonModel):
+    def load_context(self, context):
+        # Load or initialize the GPT4All model here if needed
+        self.model = GPT4All("/opt/ml/model/")
+
+    def predict(self, context, model_input):
+        # Expect model_input to be a DataFrame with 'context' and 'question' columns
+        results = []
+        for _, row in model_input.iterrows():
+            context = row['context']
+            question = row['question']
+            prompt = f"Context: {context}\nQuestion: {question}\nAnswer:"
+            response = self.model.generate(prompt)
+            results.append(response)
+        return results
+
 # Log the GPT4All model
 mlflow.pyfunc.log_model(
     artifact_path="gpt4all_model",
+    python_model=GPT4AllPythonModel(),
     artifacts={"model_path": os.path.join(model_path, "orca-mini-3b-gguf2-q4_0.gguf")},
     registered_model_name="GPT4All_Orca_Model",
     conda_env={
