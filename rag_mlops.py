@@ -204,7 +204,7 @@ for idx, question in enumerate(questions, start=1):
     }
     
     # Log del tempo di risposta di Orca per ogni domanda come metrica su MLflow
-    mlflow.log_metric(f"orca_response_time_q{q_id}", response_times.get("Orca", 0), step=idx)
+    mlflow.log_metric("orca_response_time", response_times.get("Orca", 0), step=idx)
 
     # Aggiungi il risultato alla lista
     results_data.append(result)    
