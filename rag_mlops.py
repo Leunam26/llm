@@ -63,7 +63,7 @@ def create_table():
 # Funzione per salvare gradualmente le risposte nel database
 def save_to_db(result):
     conn = psycopg2.connect(
-        host="13.51.162.134",     # Update with the EC2 instance's IPv4 address ("localhost" if local)
+        host="16.171.42.195",     # Update with the EC2 instance's IPv4 address ("localhost" if local)
         database="rag_evaluation",
         user="postgres",
         password="1234"
