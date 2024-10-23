@@ -40,7 +40,7 @@ dataset_path = os.path.abspath("Dataset")
 
 def create_table():
     conn = psycopg2.connect(
-        host="13.51.162.134",   # Update with the EC2 instance's IPv4 address ("localhost" if local)
+        host="16.171.42.195",   # Update with the EC2 instance's IPv4 address ("localhost" if local)
         database="rag_evaluation",
         user="postgres",
         password="1234"
@@ -219,6 +219,11 @@ save_to_csv(csv_file_path, results_data)
 
 # Log the CSV file to MLflow as an artifact
 mlflow.log_artifact(csv_file_path)
+
+mlflow.log_artifact(os.path.join(dataset_path, "pdf_software_engineering"))
+
+mlflow.log_artifact("question.py")
+
 
 print("Salvati tutti i risultati su CSV.") 
 
