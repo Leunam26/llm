@@ -52,6 +52,17 @@ jobs:
         env:
           MLFLOW_TRACKING_URI: ${{ env.MLFLOW_TRACKING_URI }}
 
+################################# Free disk space
+
+      - name: Free disk space
+        run: |
+          sudo swapoff -a
+          sudo rm -f /swapfile
+          sudo apt clean
+          df -h
+
+#####################################
+
 ##########################################################
       - name: Build Docker image with MLflow
         run: |
