@@ -40,7 +40,7 @@ dataset_path = os.path.abspath("Dataset")
 
 def create_table():
     conn = psycopg2.connect(
-        host="51.20.6.231",   # Update with the EC2 instance's IPv4 address ("localhost" if local)
+        host="13.60.194.87",   # Update with the EC2 instance's IPv4 address ("localhost" if local)
         database="rag_evaluation",
         user="postgres",
         password="1234"
@@ -63,7 +63,7 @@ def create_table():
 # Funzione per salvare gradualmente le risposte nel database
 def save_to_db(result):
     conn = psycopg2.connect(
-        host="51.20.6.231",     # Update with the EC2 instance's IPv4 address ("localhost" if local)
+        host="13.60.194.87",     # Update with the EC2 instance's IPv4 address ("localhost" if local)
         database="rag_evaluation",
         user="postgres",
         password="1234"
@@ -230,19 +230,10 @@ print("Salvati tutti i risultati su CSV.")
 # Define custom PythonModel class for GPT4All
 class GPT4AllPythonModel(mlflow.pyfunc.PythonModel):
     def load_context(self, context):
-        # Load or initialize the GPT4All model here if needed
-        self.model = GPT4All("/opt/ml/model/")
+        pass       
 
     def predict(self, context, model_input):
-        # Expect model_input to be a DataFrame with 'context' and 'question' columns
-        results = []
-        for _, row in model_input.iterrows():
-            context = row['context']
-            question = row['question']
-            prompt = f"Context: {context}\nQuestion: {question}\nAnswer:"
-            response = self.model.generate(prompt)
-            results.append(response)
-        return results
+        pass        
 
 # Log the GPT4All model
 mlflow.pyfunc.log_model(
