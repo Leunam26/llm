@@ -220,9 +220,9 @@ save_to_csv(csv_file_path, results_data)
 # Log the CSV file to MLflow as an artifact
 mlflow.log_artifact(csv_file_path)
 
-mlflow.log_artifact(os.path.join(dataset_path, "pdf_software_engineering"))
+#mlflow.log_artifact(os.path.join(dataset_path, "pdf_software_engineering"))
 
-mlflow.log_artifact("question.py")
+#mlflow.log_artifact("question.py")
 
 
 print("Salvati tutti i risultati su CSV.") 
@@ -239,7 +239,11 @@ class GPT4AllPythonModel(mlflow.pyfunc.PythonModel):
 mlflow.pyfunc.log_model(
     artifact_path="gpt4all_model",
     python_model=GPT4AllPythonModel(),
-    artifacts={"model_path": os.path.join(model_path, "orca-mini-3b-gguf2-q4_0.gguf")},
+    artifacts={
+        "model_path": os.path.join(model_path, "orca-mini-3b-gguf2-q4_0.gguf"),
+        "pdf_artifacts": os.path.join(dataset_path, "pdf_software_engineering"),
+        "question_script": "question.py"
+    },
     registered_model_name="GPT4All_Orca_Model",
     conda_env={
         "channels": ["defaults"],
@@ -255,7 +259,11 @@ mlflow.pyfunc.log_model(
                     "matplotlib",
                     "seaborn",
                     "pandas",
-                    "gguf"
+                    "gguf",
+                    "transformers",
+                    "pypdf",
+                    "sentence-transformers",
+                    "faiss-cpu"
                 ]
             }
         ],

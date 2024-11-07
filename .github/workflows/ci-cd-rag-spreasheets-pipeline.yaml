@@ -1,9 +1,9 @@
-name: CI/CD RAG Pipeline LLM
+name: CI/CD RAG Spreadsheets Pipeline LLM
 
 on:
-#  push:
-#    branches:
-#      - master
+  push:
+    branches:
+      - master
   pull_request:
     branches:
       - master
@@ -24,7 +24,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install dvc[all]
-          pip install gpt4all numpy psycopg2 matplotlib seaborn mlflow pandas sentence-transformers pypdf langchain_community faiss-cpu
+          pip install gpt4all numpy psycopg2 matplotlib seaborn mlflow pandas sentence-transformers langchain_community faiss-cpu openpyxl
 
       - name: Configure AWS credentials
         env:
@@ -36,7 +36,7 @@ jobs:
           aws configure set default.region eu-north-1  
 # Check the MLflow Tracking Uri
       - name: Set MLFlow tracking URI
-        run: echo "MLFLOW_TRACKING_URI=http://13.60.194.87:5000" >> $GITHUB_ENV
+        run: echo "MLFLOW_TRACKING_URI=http://13.60.45.22:5000" >> $GITHUB_ENV
         
       - name: Pull DVC data
         run: dvc pull
@@ -48,7 +48,7 @@ jobs:
         run: ls -alh ./Modelli_gpt4all/
 
       - name: Run Python script
-        run: python rag_mlops.py
+        run: python rag_mlops_spreadsheets.py
         env:
           MLFLOW_TRACKING_URI: ${{ env.MLFLOW_TRACKING_URI }}
 

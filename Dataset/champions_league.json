@@ -1,0 +1,111 @@
+[
+    {
+         "id": 1,
+         "text": "What was the result of the 1983-84 final between Liverpool and Roma within regular time ?",
+         "answer": "1-1"
+     },
+     {
+         "id": 2,
+         "text": "Which football team has the most wins in Champions League ?",
+         "answer": "Real Madrid"
+     },
+     {
+         "id": 3,
+         "text": "Which football team has scored the most goals in the Champions League ?",
+         "answer": "Real Madrid"
+     },
+     {
+         "id": 4,
+         "text": "Which football team have scored no goals in Champions League ?",
+         "answer": "Deportivo La Coruna, Dinamo Zagreb and Maccabi Haifa"
+     },
+     {
+         "id": 5,
+         "text": "Which football team has won the most titles in Champions League?",
+         "answer": "Real Madrid"
+     },
+     {
+         "id": 6,
+         "text": "How many Champions League titles has Roma won?",
+         "answer": "0"
+     },
+     {
+         "id": 7,
+         "text": "Which football team has the highest winning percentage in Champions League since 1955 ?",
+         "answer": "FC Ararat Yerevan (0.833)"
+     },
+     {
+         "id": 8,
+         "text": "Which football team has the second-largest goal difference in Champions league ?",
+         "answer": "FC Bayern München"
+     },
+     {
+         "id": 9,
+         "text": "Which football player has scored the most goals in Champions League history?",
+         "answer": "Cristiano Ronaldo"
+     },
+     {
+         "id": 10,
+         "text": "Which football team has lost the most Champions League finals?",
+         "answer": "Juventus"
+     },
+     {
+         "id": 11,
+         "text": "Which Champions League final saw the highest total goals scored since 1955?",
+         "answer": "Real Madrid vs Eintracht Frankfurt (7-3)"
+     },
+     {
+         "id": 12,
+         "text": "Which Champions League final had the highest number of spectators since 1955?",
+         "answer": "Real Madrid vs Eintracht Frankfurt"
+     },
+     {
+         "id": 13,
+         "text": "How many goals did Francesco Totti score in the Champions League?",
+         "answer": "17"
+     },
+     {
+         "id": 14,
+         "text": "Which football coach has the most appearances in the Champions League?",
+         "answer": "Carlo Ancelotti"
+     },
+     {
+         "id": 15,
+         "text": "Which football coach has 52 appearances in Champions League until 2022 ?",
+         "answer": "Unai Emery"
+     },
+     {
+         "id": 16,
+         "text": "Was the 1957-58 Real Madrid vs Milan match won in regular time or extra time?",
+         "answer": "In extra time"
+     },
+     {
+         "id": 17,
+         "text": "In which stadium have the most Champions League finals been held?",
+         "answer": "Wembley Stadium, London, England"
+     },
+     {
+         "id": 18,
+         "text": "How many times have football teams won the Champions League final when playing in their own country?",
+         "answer": "Real Madrid in 1957; Inter in 1965"
+     },
+     {
+         "id": 19,
+         "text": "Which Champions League finals were played between football teams from the same country?",
+         "answer":[
+            "Real Madrid - Atletico Madrid (2013-14)",
+             "Chelsea - Manchester City (2020-21)",
+             "Manchester United - Chelsea (2007-08)",
+             "Liverpool - Tottenham Hotspur (2018-19)",
+             "Milan - Juventus (2002-03)",
+             "Real Madrid - Atletico Madrid (2015-16)",
+             "Real Madrid - Valencia (1999-00)",
+             "Bayern Munich - Borussia Dortmund (2012-13)"
+         ]
+     },
+     {
+         "id": 20,
+         "text": "How many finals have been decided by penalties in the history of the Champions League?",
+         "answer": "11"
+     }
+]
