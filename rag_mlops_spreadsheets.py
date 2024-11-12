@@ -150,7 +150,6 @@ with connect_to_db() as conn:
 mlflow.log_artifact(csv_path)
 print(f"File CSV `qa_results.csv` salvato come artefatto su MLflow.")
 
-mlflow.log_artifact("spreadsheets_question.py")
 
 # CALCOLA F1 ed EM ################
 
@@ -210,3 +209,43 @@ with connect_to_db() as conn:
             print(f"Logged F1: {f1_orca}, EM: {em_orca} for ID: {id}")
 
 print("F1 ed EM loggati su MLflow per ciascun ID.")
+
+
+# Define custom PythonModel class for GPT4All
+class GPT4AllPythonModel(mlflow.pyfunc.PythonModel):
+    def load_context(self, context):
+        pass       
+
+    def predict(self, context, model_input):
+        pass   
+
+# Log the GPT4All model
+mlflow.pyfunc.log_model(
+    artifact_path="gpt4all_model",
+    python_model=GPT4AllPythonModel(),
+    artifacts={
+        "model_path": os.path.join(model_path, "orca-mini-3b-gguf2-q4_0.gguf"),
+        "spreadsheets_artifacts": os.path.join(dataset_path, "xlsx_files"),
+        "question_script": "spreadsheets_question.py"
+    },
+    registered_model_name="GPT4All_Orca_Model",
+    conda_env={
+        "channels": ["defaults"],
+        "dependencies": [
+            "python=3.9",
+            "pip",
+            {
+                "pip": [
+                    "mlflow",
+                    "gpt4all",
+                    "numpy",
+                    "psycopg2-binary",
+                    "pandas",
+                    "gguf",
+                    "openpyxl"
+                ]
+            }
+        ],
+        "name": "gpt4all_env"
+    }
+)
