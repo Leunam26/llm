@@ -1,8 +1,6 @@
 import pandas as pd
 import json
 import time
-from langchain.chains import LLMChain
-from langchain.prompts import PromptTemplate
 import psycopg2
 import openpyxl
 from gpt4all import GPT4All

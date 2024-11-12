@@ -24,7 +24,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install dvc[all]
-          pip install gpt4all numpy psycopg2 matplotlib seaborn mlflow pandas sentence-transformers langchain_community faiss-cpu openpyxl
+          pip install gpt4all psycopg2 mlflow pandas openpyxl
 
       - name: Configure AWS credentials
         env:
@@ -48,7 +48,7 @@ jobs:
         run: ls -alh ./Modelli_gpt4all/
 
       - name: Run Python script
-        run: python rag_mlops_ontology.py
+        run: python rag_mlops_spreadsheets.py
         env:
           MLFLOW_TRACKING_URI: ${{ env.MLFLOW_TRACKING_URI }}
 
