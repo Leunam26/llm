@@ -215,7 +215,7 @@ mlflow.pyfunc.log_model(
     artifacts={
         "model_path": os.path.join(model_path, "orca-mini-3b-gguf2-q4_0.gguf"),
         "ontology_artifacts": os.path.join(dataset_path, "ontology_files"),
-        "question_script": "galaxy.json"
+        "question_script": "ontology_question.py"
     },
     registered_model_name="GPT4All_Orca_Model",
     conda_env={

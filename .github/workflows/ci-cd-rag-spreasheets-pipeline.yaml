@@ -24,7 +24,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install dvc[all]
-          pip install gpt4all psycopg2 mlflow pandas openpyxl
+          pip install gpt4all psycopg2 mlflow pandas openpyxl langchain_community
 
       - name: Configure AWS credentials
         env:
