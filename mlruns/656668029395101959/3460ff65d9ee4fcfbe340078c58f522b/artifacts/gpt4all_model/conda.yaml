@@ -1,0 +1,14 @@
+channels:
+- defaults
+dependencies:
+- python=3.9
+- pip
+- pip:
+  - mlflow
+  - gpt4all
+  - numpy
+  - psycopg2-binary
+  - pandas
+  - gguf
+  - rdflib
+name: gpt4all_env

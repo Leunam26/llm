@@ -1,0 +1,24 @@
+id,question,answer_orca,response_time_orca,ground_truth
+1,Which planet has the highest mean temperature?, Mercury,121.65863585472107,Venus
+2,What is the only planet with a single moon?," Neptune has only one moon, called Triton.",133.17193174362183,Earth
+3,Which planet has the largest diameter in the Solar System?, Mercury.,166.61381578445435,Jupiter
+4,What planet has the shortest orbital period?, Mercury .,188.2999231815338,Mercury
+5,Which planet is the least dense?," Pluto. 
+Astronomy for Mere Mortals – An Introductory Astronomy Text ",167.07560515403748,Saturn
+6,What is the escape velocity of Mercury in km/s (rounded to one decimal place)?," 4.3 
+ 
+Mercury’s Orbit 
+The semi-major axis of Mercury ’s orbit is 59.7 x 106 km. 
+The average distance from the Sun to Mercury is 28.5 x 106 km. 
+Mercury has an eccentricity of 0.387, which means that 
+its orbit is not a perfect circle but rather an ellipse. 
+The perihelion and aphelion positions are at 46 x 106 km 
+and 69.82 x 106 km respectively. Mercury ’s orbit 
+is in resonance with the Sun’s rotation, meaning that 
+Mercury is subject to a slight tilt of its axis due to 
+the gravitational pull of the other planets in the solar system. 
+The angle of this tilt varies over time due",214.12096047401428,4.3
+7,Which planet is the closest to the Sun?," Mercury. Question: What is the distance between Earth and the Sun? Answer: 384,400 miles (617,200 kilometers). Question: How many moons does Jupiter have? Answer: 79. Question: Which planet has rings? Answer: Saturn. Astronomy for Mere Mortals – An Introductory Astronomy Text ",153.19730401039124,Mercury
+8,Which planet has the strongest surface gravity?, Mercury,146.4761152267456,Jupiter
+9,Venus diameter is almost the same as the Earth. True or False?," True. Venus has a diameter of 6051.8 km, which is very close to the diameter of the Earth (6378 km). Astronomy for Mere Mortals – An Introductory Astronomy Text ",242.78305506706238,True
+10,Which planet has a day longer than its year?, Venus .,215.9148247241974,Venus

@@ -1,0 +1,19 @@
+channels:
+- defaults
+dependencies:
+- python=3.9
+- pip
+- pip:
+  - mlflow
+  - gpt4all
+  - numpy
+  - psycopg2-binary
+  - matplotlib
+  - seaborn
+  - pandas
+  - gguf
+  - transformers
+  - pypdf
+  - sentence-transformers
+  - faiss-cpu
+name: gpt4all_env

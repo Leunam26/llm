@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rdf:RDF
+   xmlns:ns1="http://example.com/resource#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+>
+  <rdf:Description rdf:about="http://example.com/resource/Mercury">
+    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+    <ns1:planet>Mercury</ns1:planet>
+    <ns1:mass>0.330</ns1:mass>
+    <ns1:diameter>4879</ns1:diameter>
+    <ns1:density>5427</ns1:density>
+    <ns1:gravity>3.7</ns1:gravity>
+    <ns1:escape_velocity>4.3</ns1:escape_velocity>
+    <ns1:rotation_period>1407.6</ns1:rotation_period>
+    <ns1:length_of_day>4222.6</ns1:length_of_day>
+    <ns1:distance_from_sun>57.9</ns1:distance_from_sun>
+    <ns1:perihelion>46.0</ns1:perihelion>
+    <ns1:aphelion>69.8</ns1:aphelion>
+    <ns1:orbital_period>88.0</ns1:orbital_period>
+    <ns1:orbital_velocity>47.4</ns1:orbital_velocity>
+    <ns1:orbital_inclination>7.0</ns1:orbital_inclination>
+    <ns1:orbital_eccentricity>0.205</ns1:orbital_eccentricity>
+    <ns1:obliquity_to_orbit>0.034</ns1:obliquity_to_orbit>
+    <ns1:mean_temperature>167</ns1:mean_temperature>
+    <ns1:surface_pressure>0</ns1:surface_pressure>
+    <ns1:number_of_moons>0</ns1:number_of_moons>
+    <ns1:has_ring_system>No</ns1:has_ring_system>
+    <ns1:has_global_magnetic_field>Yes</ns1:has_global_magnetic_field>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.com/resource/Earth">
+    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+    <ns1:planet>Earth</ns1:planet>
+    <ns1:mass>5.97</ns1:mass>
+    <ns1:diameter>12756</ns1:diameter>
+    <ns1:density>5514</ns1:density>
+    <ns1:gravity>9.8</ns1:gravity>
+    <ns1:escape_velocity>11.2</ns1:escape_velocity>
+    <ns1:rotation_period>23.9</ns1:rotation_period>
+    <ns1:length_of_day>24.0</ns1:length_of_day>
+    <ns1:distance_from_sun>149.6</ns1:distance_from_sun>
+    <ns1:perihelion>147.1</ns1:perihelion>
+    <ns1:aphelion>152.1</ns1:aphelion>
+    <ns1:orbital_period>365.2</ns1:orbital_period>
+    <ns1:orbital_velocity>29.8</ns1:orbital_velocity>
+    <ns1:orbital_inclination>0.0</ns1:orbital_inclination>
+    <ns1:orbital_eccentricity>0.017</ns1:orbital_eccentricity>
+    <ns1:obliquity_to_orbit>23.4</ns1:obliquity_to_orbit>
+    <ns1:mean_temperature>15</ns1:mean_temperature>
+    <ns1:surface_pressure>1</ns1:surface_pressure>
+    <ns1:number_of_moons>1</ns1:number_of_moons>
+    <ns1:has_ring_system>No</ns1:has_ring_system>
+    <ns1:has_global_magnetic_field>Yes</ns1:has_global_magnetic_field>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.com/resource/Jupiter">
+    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+    <ns1:planet>Jupiter</ns1:planet>
+    <ns1:mass>1898</ns1:mass>
+    <ns1:diameter>142984</ns1:diameter>
+    <ns1:density>1326</ns1:density>
+    <ns1:gravity>23.1</ns1:gravity>
+    <ns1:escape_velocity>59.5</ns1:escape_velocity>
+    <ns1:rotation_period>9.9</ns1:rotation_period>
+    <ns1:length_of_day>9.9</ns1:length_of_day>
+    <ns1:distance_from_sun>778.6</ns1:distance_from_sun>
+    <ns1:perihelion>740.5</ns1:perihelion>
+    <ns1:aphelion>816.6</ns1:aphelion>
+    <ns1:orbital_period>4331</ns1:orbital_period>
+    <ns1:orbital_velocity>13.1</ns1:orbital_velocity>
+    <ns1:orbital_inclination>1.3</ns1:orbital_inclination>
+    <ns1:orbital_eccentricity>0.049</ns1:orbital_eccentricity>
+    <ns1:obliquity_to_orbit>3.1</ns1:obliquity_to_orbit>
+    <ns1:mean_temperature>-110</ns1:mean_temperature>
+    <ns1:surface_pressure>Unknown*</ns1:surface_pressure>
+    <ns1:number_of_moons>79</ns1:number_of_moons>
+    <ns1:has_ring_system>Yes</ns1:has_ring_system>
+    <ns1:has_global_magnetic_field>Yes</ns1:has_global_magnetic_field>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.com/resource/Neptune">
+    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+    <ns1:planet>Neptune</ns1:planet>
+    <ns1:mass>102</ns1:mass>
+    <ns1:diameter>49528</ns1:diameter>
+    <ns1:density>1638</ns1:density>
+    <ns1:gravity>11.0</ns1:gravity>
+    <ns1:escape_velocity>23.5</ns1:escape_velocity>
+    <ns1:rotation_period>16.1</ns1:rotation_period>
+    <ns1:length_of_day>16.1</ns1:length_of_day>
+    <ns1:distance_from_sun>4495.1</ns1:distance_from_sun>
+    <ns1:perihelion>4444.5</ns1:perihelion>
+    <ns1:aphelion>4545.7</ns1:aphelion>
+    <ns1:orbital_period>59800</ns1:orbital_period>
+    <ns1:orbital_velocity>5.4</ns1:orbital_velocity>
+    <ns1:orbital_inclination>1.8</ns1:orbital_inclination>
+    <ns1:orbital_eccentricity>0.011</ns1:orbital_eccentricity>
+    <ns1:obliquity_to_orbit>28.3</ns1:obliquity_to_orbit>
+    <ns1:mean_temperature>-200</ns1:mean_temperature>
+    <ns1:surface_pressure>Unknown*</ns1:surface_pressure>
+    <ns1:number_of_moons>14</ns1:number_of_moons>
+    <ns1:has_ring_system>Yes</ns1:has_ring_system>
+    <ns1:has_global_magnetic_field>Yes</ns1:has_global_magnetic_field>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.com/resource/Mars">
+    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+    <ns1:planet>Mars</ns1:planet>
+    <ns1:mass>0.642</ns1:mass>
+    <ns1:diameter>6792</ns1:diameter>
+    <ns1:density>3933</ns1:density>
+    <ns1:gravity>3.7</ns1:gravity>
+    <ns1:escape_velocity>5.0</ns1:escape_velocity>
+    <ns1:rotation_period>24.6</ns1:rotation_period>
+    <ns1:length_of_day>24.7</ns1:length_of_day>
+    <ns1:distance_from_sun>227.9</ns1:distance_from_sun>
+    <ns1:perihelion>206.6</ns1:perihelion>
+    <ns1:aphelion>249.2</ns1:aphelion>
+    <ns1:orbital_period>687.0</ns1:orbital_period>
+    <ns1:orbital_velocity>24.1</ns1:orbital_velocity>
+    <ns1:orbital_inclination>1.9</ns1:orbital_inclination>
+    <ns1:orbital_eccentricity>0.094</ns1:orbital_eccentricity>
+    <ns1:obliquity_to_orbit>25.2</ns1:obliquity_to_orbit>
+    <ns1:mean_temperature>-65</ns1:mean_temperature>
+    <ns1:surface_pressure>0.01</ns1:surface_pressure>
+    <ns1:number_of_moons>2</ns1:number_of_moons>
+    <ns1:has_ring_system>No</ns1:has_ring_system>
+    <ns1:has_global_magnetic_field>No</ns1:has_global_magnetic_field>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.com/resource/Saturn">
+    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+    <ns1:planet>Saturn</ns1:planet>
+    <ns1:mass>568</ns1:mass>
+    <ns1:diameter>120536</ns1:diameter>
+    <ns1:density>687</ns1:density>
+    <ns1:gravity>9.0</ns1:gravity>
+    <ns1:escape_velocity>35.5</ns1:escape_velocity>
+    <ns1:rotation_period>10.7</ns1:rotation_period>
+    <ns1:length_of_day>10.7</ns1:length_of_day>
+    <ns1:distance_from_sun>1433.5</ns1:distance_from_sun>
+    <ns1:perihelion>1352.6</ns1:perihelion>
+    <ns1:aphelion>1514.5</ns1:aphelion>
+    <ns1:orbital_period>10747</ns1:orbital_period>
+    <ns1:orbital_velocity>9.7</ns1:orbital_velocity>
+    <ns1:orbital_inclination>2.5</ns1:orbital_inclination>
+    <ns1:orbital_eccentricity>0.057</ns1:orbital_eccentricity>
+    <ns1:obliquity_to_orbit>26.7</ns1:obliquity_to_orbit>
+    <ns1:mean_temperature>-140</ns1:mean_temperature>
+    <ns1:surface_pressure>Unknown*</ns1:surface_pressure>
+    <ns1:number_of_moons>62</ns1:number_of_moons>
+    <ns1:has_ring_system>Yes</ns1:has_ring_system>
+    <ns1:has_global_magnetic_field>Yes</ns1:has_global_magnetic_field>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.com/resource/Pluto">
+    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+    <ns1:planet>Pluto</ns1:planet>
+    <ns1:mass>0.0146</ns1:mass>
+    <ns1:diameter>2370</ns1:diameter>
+    <ns1:density>2095</ns1:density>
+    <ns1:gravity>0.7</ns1:gravity>
+    <ns1:escape_velocity>1.3</ns1:escape_velocity>
+    <ns1:rotation_period>-153.3</ns1:rotation_period>
+    <ns1:length_of_day>153.3</ns1:length_of_day>
+    <ns1:distance_from_sun>5906.4</ns1:distance_from_sun>
+    <ns1:perihelion>4436.8</ns1:perihelion>
+    <ns1:aphelion>7375.9</ns1:aphelion>
+    <ns1:orbital_period>90560</ns1:orbital_period>
+    <ns1:orbital_velocity>4.7</ns1:orbital_velocity>
+    <ns1:orbital_inclination>17.2</ns1:orbital_inclination>
+    <ns1:orbital_eccentricity>0.244</ns1:orbital_eccentricity>
+    <ns1:obliquity_to_orbit>122.5</ns1:obliquity_to_orbit>
+    <ns1:mean_temperature>-225</ns1:mean_temperature>
+    <ns1:surface_pressure>0.00001</ns1:surface_pressure>
+    <ns1:number_of_moons>5</ns1:number_of_moons>
+    <ns1:has_ring_system>No</ns1:has_ring_system>
+    <ns1:has_global_magnetic_field>Unknown</ns1:has_global_magnetic_field>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.com/resource/Venus">
+    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+    <ns1:planet>Venus</ns1:planet>
+    <ns1:mass>4.87</ns1:mass>
+    <ns1:diameter>12104</ns1:diameter>
+    <ns1:density>5243</ns1:density>
+    <ns1:gravity>8.9</ns1:gravity>
+    <ns1:escape_velocity>10.4</ns1:escape_velocity>
+    <ns1:rotation_period>-5832.5</ns1:rotation_period>
+    <ns1:length_of_day>2802.0</ns1:length_of_day>
+    <ns1:distance_from_sun>108.2</ns1:distance_from_sun>
+    <ns1:perihelion>107.5</ns1:perihelion>
+    <ns1:aphelion>108.9</ns1:aphelion>
+    <ns1:orbital_period>224.7</ns1:orbital_period>
+    <ns1:orbital_velocity>35.0</ns1:orbital_velocity>
+    <ns1:orbital_inclination>3.4</ns1:orbital_inclination>
+    <ns1:orbital_eccentricity>0.007</ns1:orbital_eccentricity>
+    <ns1:obliquity_to_orbit>177.4</ns1:obliquity_to_orbit>
+    <ns1:mean_temperature>464</ns1:mean_temperature>
+    <ns1:surface_pressure>92</ns1:surface_pressure>
+    <ns1:number_of_moons>0</ns1:number_of_moons>
+    <ns1:has_ring_system>No</ns1:has_ring_system>
+    <ns1:has_global_magnetic_field>No</ns1:has_global_magnetic_field>
+  </rdf:Description>
+  <rdf:Description rdf:about="http://example.com/resource/Uranus">
+    <rdf:type rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+    <ns1:planet>Uranus</ns1:planet>
+    <ns1:mass>86.8</ns1:mass>
+    <ns1:diameter>51118</ns1:diameter>
+    <ns1:density>1271</ns1:density>
+    <ns1:gravity>8.7</ns1:gravity>
+    <ns1:escape_velocity>21.3</ns1:escape_velocity>
+    <ns1:rotation_period>-17.2</ns1:rotation_period>
+    <ns1:length_of_day>17.2</ns1:length_of_day>
+    <ns1:distance_from_sun>2872.5</ns1:distance_from_sun>
+    <ns1:perihelion>2741.3</ns1:perihelion>
+    <ns1:aphelion>3003.6</ns1:aphelion>
+    <ns1:orbital_period>30589</ns1:orbital_period>
+    <ns1:orbital_velocity>6.8</ns1:orbital_velocity>
+    <ns1:orbital_inclination>0.8</ns1:orbital_inclination>
+    <ns1:orbital_eccentricity>0.046</ns1:orbital_eccentricity>
+    <ns1:obliquity_to_orbit>97.8</ns1:obliquity_to_orbit>
+    <ns1:mean_temperature>-195</ns1:mean_temperature>
+    <ns1:surface_pressure>Unknown*</ns1:surface_pressure>
+    <ns1:number_of_moons>27</ns1:number_of_moons>
+    <ns1:has_ring_system>Yes</ns1:has_ring_system>
+    <ns1:has_global_magnetic_field>Yes</ns1:has_global_magnetic_field>
+  </rdf:Description>
+</rdf:RDF>

@@ -115,29 +115,10 @@ cur = conn.cursor()
 # Define custom PythonModel class for GPT4All
 class GPT4AllPythonModel(mlflow.pyfunc.PythonModel):
     def load_context(self, context):
-        # Carica il modello dal file python_model.pkl
-        model_path = "/opt/ml/model/"
-        
-        try:
-            self.model = mlflow.pyfunc.load_model(model_path)
-        except Exception as e:
-            print(f"Error loading model: {e}")
+        pass       
 
     def predict(self, context, model_input):
-        # Expect model_input to be a DataFrame with 'context' and 'question' columns
-        results = []
-        for _, row in model_input.iterrows():
-            context = row['context']
-            question = row['question']
-            prompt = f"Context: {context}\nQuestion: {question}\nAnswer:"
-            response = self.model.generate(prompt)
-            results.append(response)
-        return results
-    
-    def query_llm(self, context, question):
-        prompt = f"Context: {context}\nQuestion: {question}\nAnswer:"
-        response = self.model.generate(prompt)
-        return response
+        pass  
 
 
 # Lists to store EM and F1 values for each example

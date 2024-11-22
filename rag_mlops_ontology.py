@@ -8,11 +8,11 @@ import mlflow
 import pandas as pd
 
 # Set our tracking server uri for logging
-#mlflow.set_tracking_uri(uri="http://localhost:5000")
+mlflow.set_tracking_uri(uri="http://localhost:5000")
 mlflow.set_experiment(experiment_name='LLM Mini Orca')
 mlflow.start_run(run_name='Run Mini Orca RAG - Ontology')
 run_id = mlflow.active_run().info.run_id
-mlflow.set_tag("Training Info", "Run Orca with RAG on Via Lattea ontology information file")
+mlflow.set_tag("Training Info", "Run Orca with RAG on SWEET ontology information file")
 
 mlflow.log_param("model_name", "Mini Orca")
 mlflow.log_param("model_type", "LLM")
@@ -22,13 +22,13 @@ mlflow.log_param("library", "gpt4all")
 
 # Log specific run parameters
 mlflow.log_param("number_questions", 25) 
-mlflow.log_param("Dataset", "Owlapi Via Lattea RDF")
+mlflow.log_param("Dataset", "SWEET ontology")
 
 
 # Impostare la connessione al database
 def connect_to_db():
     return psycopg2.connect(
-        host="13.51.204.107",  
+        host="localhost",  
         database="rag_ontology_evaluation",  
         user="postgres",  
         password="1234"  
@@ -42,7 +42,7 @@ dataset_path = os.path.abspath("Dataset")
 model_orca = GPT4All(os.path.join(model_path, "orca-mini-3b-gguf2-q4_0.gguf"), allow_download=False)
 
 # Carica il file JSON con le domande
-with open(os.path.join(dataset_path, "galaxy.json")) as f:
+with open(os.path.join(dataset_path, "sweet.json")) as f:
     questions = json.load(f)
 
 # Load RDF data and set up retrieval function
@@ -68,8 +68,7 @@ def retrieve_context(graph, question):
 
 
 # Connect to RDF file
-rdf_graph = load_rdf_data(os.path.join(dataset_path, "ontology_files", "owlapi_vialattea.xrdf"))
-
+rdf_graph = load_rdf_data(os.path.join(dataset_path, "ontology_files", "owlapi.xrdf"))
 
 def create_table():
     # Crea una connessione al database
@@ -212,11 +211,11 @@ class GPT4AllPythonModel(mlflow.pyfunc.PythonModel):
 mlflow.pyfunc.log_model(
     artifact_path="gpt4all_model",
     python_model=GPT4AllPythonModel(),
-    artifacts={
-        "model_path": os.path.join(model_path, "orca-mini-3b-gguf2-q4_0.gguf"),
-        "ontology_artifacts": os.path.join(dataset_path, "ontology_files"),
-        "question_script": "ontology_question.py"
-    },
+#    artifacts={
+#        "model_path": os.path.join(model_path, "orca-mini-3b-gguf2-q4_0.gguf"),
+#        "ontology_artifacts": os.path.join(dataset_path, "ontology_files"),
+#        "question_script": "ontology_question.py"
+#    },
     registered_model_name="GPT4All_Orca_Model",
     conda_env={
         "channels": ["defaults"],

@@ -1,0 +1,14 @@
+aliases: []
+creation_timestamp: 1732114846397
+current_stage: None
+description: null
+last_updated_timestamp: 1732114846397
+name: GPT4All_Orca_Model
+run_id: 50af35e469924592affe190516df4e3a
+run_link: null
+source: file:///C:/Users/mnico/Documents/GitHub/llm/mlruns/656668029395101959/50af35e469924592affe190516df4e3a/artifacts/gpt4all_model
+status: READY
+status_message: null
+storage_location: file:///C:/Users/mnico/Documents/GitHub/llm/mlruns/656668029395101959/50af35e469924592affe190516df4e3a/artifacts/gpt4all_model
+user_id: null
+version: 1

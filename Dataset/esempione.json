@@ -1,0 +1,303 @@
+[
+
+    {
+        "id": 1,
+        "question": "Which planet has the highest mean temperature?",
+        "ground_truth": "Venus"
+    },
+    {
+        "id": 2,
+        "question": "What is the only planet with a single moon?",
+        "ground_truth": "Earth"
+    },
+    {
+        "id": 3,
+        "question": "Which planet has the largest diameter in the Solar System?",
+        "ground_truth": "Jupiter"
+    },
+    {
+        "id": 4,
+        "question": "What planet has the shortest orbital period?",
+        "ground_truth": "Mercury"
+    },
+    {
+        "id": 5,
+        "question": "Which planet is the least dense?",
+        "ground_truth": "Saturn"
+    },
+    {
+        "id": 6,
+        "question": "What is the escape velocity of Mercury in km/s (rounded to one decimal place)?",
+        "ground_truth": "4.3"
+    },
+    {
+        "id": 7,
+        "question": "Which planet is the closest to the Sun?",
+        "ground_truth": "Mercury"
+    },
+    {
+        "id": 8,
+        "question": "Which planet has the strongest surface gravity?",
+        "ground_truth": "Jupiter"
+    },
+    {
+        "id": 9,
+        "question": "Venus diameter is almost the same as the Earth. True or False?",
+        "ground_truth": "True"
+    },
+    {
+        "id": 10,
+        "question": "Which planet has a day longer than its year?",
+        "ground_truth": "Venus"
+    },
+    {
+        "id": 11,
+        "question": "What is the equatorial radius of Venus in Km? (round up to the next whole number)?",
+        "ground_truth": "6052"
+    },
+    {
+        "id": 12,
+        "question": "Which planet has a global magnetic field but no ring system?",
+        "ground_truth": "Earth"
+    },
+    {
+        "id": 13,
+        "question": "What planet is known for its prominent ring system?",
+        "ground_truth": "Saturn"
+    },
+    {
+        "id": 14,
+        "question": "Which planet has the longest rotation period?",
+        "ground_truth": "Venus"
+    },
+    {
+        "id": 15,
+        "question": "Which planet has the shortest day in the Solar System?",
+        "ground_truth": "Jupiter"
+    },
+    {
+        "id": 16,
+        "question": "Which planet's average distance from the Sun is about 149.6 million km?",
+        "ground_truth": "Earth"
+    },
+    {
+        "id": 17,
+        "question": "What planet has the coldest average temperature?",
+        "ground_truth": "Uranus"
+    },
+    {
+        "id": 18,
+        "question": "Which planet has a rotation axis tilted at 98 degrees?",
+        "ground_truth": "Uranus"
+    },
+    {
+        "id": 19,
+        "question": "Which planet has a similar day length to Earth's?",
+        "ground_truth": "Mars"
+    },
+    {
+        "id": 20,
+        "question": "What is the gravity on Mercury in m/s² (rounded to one decimal place)?",
+        "ground_truth": "3.7"
+    },
+    {
+        "id": 21,
+        "question": "What is the gravity on Earth in m/s² (rounded to one decimal place)?",
+        "ground_truth": "9.8"
+    },
+    {
+        "id": 22,
+        "question": "What is the escape velocity of Jupiter in km/s (rounded to one decimal place)?",
+        "ground_truth": "59.5"
+    },
+    {
+        "id": 23,
+        "question": "What is the orbital velocity of Mercury in km/s (rounded to one decimal place)?",
+        "ground_truth": "47.4"
+    },
+    {
+        "id": 24,
+        "question": "What is the diameter of Mars in kilometers (rounded to one decimal place)?",
+        "ground_truth": "6792"
+    },
+    {
+        "id": 25,
+        "question": "What is the mean density of Venus in kg/m³ (rounded to one decimal place)?",
+        "ground_truth": "5243"
+    },
+    {
+        "id": 26,
+        "question": "What is the orbital period of Neptune in Earth years (rounded to one decimal place)?",
+        "ground_truth": "164.8"
+    },
+    {
+        "id": 27,
+        "question": "What is the obliquity to orbit of Saturn in degrees (rounded to one decimal place)?",
+        "ground_truth": "26.7"
+    },
+    {
+        "id": 28,
+        "question": "What is the average distance of Venus from the Sun in million km (rounded to one decimal place)?",
+        "ground_truth": "108.2"
+    },
+    {
+        "id": 29,
+        "question": "What is the surface gravity on Mars in m/s² (rounded to one decimal place)?",
+        "ground_truth": "3.7"
+    },
+    {
+        "id": 30,
+        "question": "What is the escape velocity of Earth in km/s (rounded to one decimal place)?",
+        "ground_truth": "11.2"
+    },
+    {
+        "id": 31,
+        "question": "Which planet does the Moon orbit?",
+        "ground_truth": "Earth"
+    },
+    {
+        "id": 32,
+        "question": "What is the largest satellite of Saturn by diameter?",
+        "ground_truth": "Titan"
+    },
+    {
+        "id": 33,
+        "question": "What is the diameter of Titan in km? (round up to the next whole number)",
+        "ground_truth": "5150"
+    },
+    {
+        "id": 34,
+        "question": "What is the diameter of the satellite Hyperion? (round to the next whole number)",
+        "ground_truth": "370"
+    },
+    {
+        "id": 35,
+        "question": "Which satellite of Mars has a larger radius?",
+        "ground_truth": "Phobos"
+    },
+    {
+        "id": 36,
+        "question": "What is the diameter of Deimos in Km?",
+        "ground_truth": "6.2"
+    },
+    {
+        "id": 37,
+        "question": "Which planet does Ganymede orbit?",
+        "ground_truth": "Jupiter"
+    },
+    {
+        "id": 38,
+        "question": "What is the equatorial radius of the Moon in Km? (round to the next whole number)",
+        "ground_truth": "1738"
+    },
+    {
+        "id": 39,
+        "question": "Which planet does the satellite Callisto belong to?",
+        "ground_truth": "Jupiter"
+    },
+    {
+        "id": 40,
+        "question": "What is the second-largest satellite of Uranus?",
+        "ground_truth": "Oberon"
+    },
+    {
+        "id": 41,
+        "question": "What is the largest satellite of Uranus?",
+        "ground_truth": "Titania"
+    },
+    {
+        "id": 42,
+        "question": "What is the largest satellite of Neptune?",
+        "ground_truth": "Triton"
+    },
+    {
+        "id": 43,
+        "question": "Which planet does the satellite Nereid belong to?",
+        "ground_truth": "Neptune"
+    },
+    {
+        "id": 44,
+        "question": "What is the radius of Nereid in Km (round to the next whole number)?",
+        "ground_truth": "170"
+    },
+    {
+        "id": 45,
+        "question": "What is the third-largest satellite of Saturn by diameter?",
+        "ground_truth": "Iapetus"
+    },
+    {
+        "id": 46,
+        "question": "What is the radius of Rhea in Km? (round to the next whole number)",
+        "ground_truth": "1530"
+    },
+    {
+        "id": 47,
+        "question": "Which planet does Europa orbit?",
+        "ground_truth": "Jupiter"
+    },
+    {
+        "id": 48,
+        "question": "Which satellite of Jupiter has a larger radius?",
+        "ground_truth": "Io"
+    },
+    {
+        "id": 49,
+        "question": "Mimas has a diameter of 100 Km. True or False?",
+        "ground_truth": "False"
+    },
+    {
+        "id": 50,
+        "question": "Mimas belongs to Jupiter. True or False?",
+        "ground_truth": "False"
+    },
+    {
+        "id": 51,
+        "question": "Tethys belongs to Saturn. True or False?",
+        "ground_truth": "True"
+    },
+    {
+        "id": 52,
+        "question": "Does Venus have satellites?",
+        "ground_truth": "No"
+    },
+    {
+        "id": 53,
+        "question": "Europa belongs to which planet?",
+        "ground_truth": "Jupiter"
+    },
+    {
+        "id": 54,
+        "question": "How many natural satellites does Mercury have?",
+        "ground_truth": "0"
+    },
+    {
+        "id": 55,
+        "question": "What is the diameter of Dione in Km? (round up to the next whole number)",
+        "ground_truth": "1120"
+    },
+    {
+        "id": 56,
+        "question": "Oberon orbits which planet?",
+        "ground_truth": "Uranus"
+    },
+    {
+        "id": 57,
+        "question": "Miranda orbits Jupiter. True or False?",
+        "ground_truth": "False"
+    },
+    {
+        "id": 58,
+        "question": "Titania and Miranda both orbit Uranus. True or False?",
+        "ground_truth": "True"
+    },
+    {
+        "id": 59,
+        "question": "Does Ariel orbit Venus? True or False?",
+        "ground_truth": "False"
+    },
+    {
+        "id": 60,
+        "question": "What is the diameter of the satellite Umbriel? (round up to the next whole number)",
+        "ground_truth": "1170"
+    }
+]

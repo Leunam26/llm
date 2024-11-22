@@ -1,0 +1,128 @@
+[
+
+    {
+        "id": 1,
+        "question": "What is the primary component of the Earth's atmosphere?",
+        "ground_truth": "Nitrogen"
+    },
+    {
+        "id": 2,
+        "question": "Which layer of Earth's atmosphere contains the ozone layer?",
+        "ground_truth": "Stratosphere"
+    },
+    {
+        "id": 3,
+        "question": "What process is primarily responsible for converting carbon dioxide into oxygen?",
+        "ground_truth": "Photosynthesis"
+    },
+    {
+        "id": 4,
+        "question": "Which realm encompasses all freshwater bodies on Earth's surface?",
+        "ground_truth": "Terrestrial Hydrosphere"
+    },
+    {
+        "id": 5,
+        "question": "What is the main cause of ocean currents?",
+        "ground_truth": "Wind and Earth's rotation"
+    },
+    {
+        "id": 6,
+        "question": "Which phenomenon describes the trapping of heat in the Earth's atmosphere?",
+        "ground_truth": "Greenhouse effect"
+    },
+    {
+        "id": 7,
+        "question": "What term refers to the study of Earth's physical structure and substance?",
+        "ground_truth": "Geology"
+    },
+    {
+        "id": 8,
+        "question": "What natural process breaks down rocks into soil and minerals?",
+        "ground_truth": "Weathering"
+    },
+    {
+        "id": 9,
+        "question": "Which gas is most commonly associated with volcanic eruptions?",
+        "ground_truth": "Carbon dioxide"
+    },
+    {
+        "id": 10,
+        "question": "What is the primary source of energy driving the water cycle?",
+        "ground_truth": "The Sun"
+    },
+    {
+        "id": 11,
+        "question": "Which human activity is a major contributor to deforestation?",
+        "ground_truth": "Agriculture"
+    },
+    {
+        "id": 12,
+        "question": "What term describes the seasonal movement of water through precipitation, infiltration, and runoff?",
+        "ground_truth": "Water cycle"
+    },
+    {
+        "id": 13,
+        "question": "Which chemical element is most abundant in the Earth's crust?",
+        "ground_truth": "Oxygen"
+    },
+    {
+        "id": 14,
+        "question": "What is the process of water changing from a liquid to a gas called?",
+        "ground_truth": "Evaporation"
+    },
+    {
+        "id": 15,
+        "question": "Which layer of soil contains the highest concentration of organic matter?",
+        "ground_truth": "Topsoil"
+    },
+    {
+        "id": 16,
+        "question": "What term is used for large-scale weather patterns that last several weeks to months?",
+        "ground_truth": "Climate phenomena"
+    },
+    {
+        "id": 17,
+        "question": "Which realm includes Earth's oceanic and marine environments?",
+        "ground_truth": "Ocean Realm"
+    },
+    {
+        "id": 18,
+        "question": "What type of ecosystem is dominated by grasses rather than large shrubs or trees?",
+        "ground_truth": "Grassland"
+    },
+    {
+        "id": 19,
+        "question": "Which natural process leads to the gradual warming of Earth's surface?",
+        "ground_truth": "Global warming"
+    },
+    {
+        "id": 20,
+        "question": "What is the main source of carbon dioxide emissions from human activities?",
+        "ground_truth": "Fossil fuel combustion"
+    },
+    {
+        "id": 21,
+        "question": "What is the main factor causing seasonal changes on Earth?",
+        "ground_truth": "The tilt of Earth's axis"
+    },
+    {
+        "id": 22,
+        "question": "Which type of rock is formed through the cooling and solidification of magma or lava?",
+        "ground_truth": "Igneous rock"
+    },
+    {
+        "id": 23,
+        "question": "What process involves the movement of water through soil and into groundwater reservoirs?",
+        "ground_truth": "Infiltration"
+    },
+    {
+        "id": 24,
+        "question": "Which biome is characterized by low temperatures and permafrost?",
+        "ground_truth": "Tundra"
+    },
+    {
+        "id": 25,
+        "question": "What type of ecosystem relies on tides and is found where rivers meet the sea?",
+        "ground_truth": "Estuary"
+    }
+]

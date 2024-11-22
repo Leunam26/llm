@@ -1,0 +1,12 @@
+mlflow
+gpt4all
+numpy
+psycopg2-binary
+matplotlib
+seaborn
+pandas
+gguf
+transformers
+pypdf
+sentence-transformers
+faiss-cpu

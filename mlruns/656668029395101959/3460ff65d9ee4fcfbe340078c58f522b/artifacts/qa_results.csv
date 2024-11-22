@@ -1,0 +1,11 @@
+id,question,answer_orca,response_time_orca,ground_truth
+1,Which planet has the highest mean temperature?,ERROR: The prompt size exceeds the context window size and cannot be processed.,0.0,Venus
+2,What is the only planet with a single moon?,ERROR: The prompt size exceeds the context window size and cannot be processed.,0.0,Earth
+3,Which planet has the largest diameter in the Solar System?,ERROR: The prompt size exceeds the context window size and cannot be processed.,0.008602380752563477,Jupiter
+4,What planet has the shortest orbital period?,ERROR: The prompt size exceeds the context window size and cannot be processed.,0.013586759567260742,Mercury
+5,Which planet is the least dense?,ERROR: The prompt size exceeds the context window size and cannot be processed.,0.012995004653930664,Saturn
+6,What is the escape velocity of Mercury in km/s (rounded to one decimal place)?,ERROR: The prompt size exceeds the context window size and cannot be processed.,0.00600886344909668,4.3
+7,Which planet is the closest to the Sun?,ERROR: The prompt size exceeds the context window size and cannot be processed.,0.011189699172973633,Mercury
+8,Which planet has the strongest surface gravity?,ERROR: The prompt size exceeds the context window size and cannot be processed.,0.011199474334716797,Jupiter
+9,Venus diameter is almost the same as the Earth. True or False?,ERROR: The prompt size exceeds the context window size and cannot be processed.,0.0070645809173583984,True
+10,Which planet has a day longer than its year?,ERROR: The prompt size exceeds the context window size and cannot be processed.,0.005024433135986328,Venus

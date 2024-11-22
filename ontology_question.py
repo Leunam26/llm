@@ -4,12 +4,12 @@ from rdflib import Graph
 import os
 import re
 
-# Imposta il percorso per il modello e il dataset
-model_path = os.path.abspath("Modelli_gpt4all")
-dataset_path = os.path.abspath("Dataset")
+# Percorsi dove sono stati salvati gli artifact (modello e PDF)
+model_path = "/opt/ml/model/artifacts/orca-mini-3b-gguf2-q4_0.gguf"
+dataset_path = "/opt/ml/model/artifacts/ontology_files"
 
-# 1. Carica il modello locale
-model_orca = GPT4All(os.path.join(model_path, "orca-mini-3b-gguf2-q4_0.gguf"), allow_download=False)
+# Carica il modello GPT4All .gguf
+model_orca = GPT4All(model_path, allow_download=False)
 
 # Funzione per caricare i dati RDF e configurare il retrieval
 def load_rdf_data(rdf_file_path):
@@ -32,7 +32,7 @@ def retrieve_context(graph, question):
     return context
 
 # Connetti il grafo RDF
-rdf_graph = load_rdf_data(os.path.join(dataset_path, "ontology_files", "owlapi_vialattea.xrdf"))
+rdf_graph = load_rdf_data(os.path.join(dataset_path, "owlapi.xrdf"))
 
 # Loop per accettare input dell'utente e fare domande al modello
 print("Inserisci la tua domanda (digita 'ctrl + c' per terminare):")

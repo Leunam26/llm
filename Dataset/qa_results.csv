@@ -1,0 +1,14 @@
+id,question_text,ground_truth,answer_orca,response_time_orca
+1,Which planet has the highest mean temperature?,Venus,"1. The surface of Venus is extremely hot, with an average temperature of about 864 degrees Fahrenheit (462 degrees Celsius). 2. Mercury is also very hot, with an average temperature of about 800 degrees Fahrenheit (430 degrees Celsius) on its surface.",10.506442308425903
+2,What is the only planet with a single moon?,Earth,"1) The question is asking for the name of a planet that has one moon. 2) The answer should be the name of a planet, not a satellite or other celestial body.",6.497682571411133
+3,Which planet has the largest diameter in the Solar System?,Jupiter,"1. The answer to this question is Neptune, which has a diameter of approximately 4,580 kilometers (2,840 miles). 2. Neptune is the fourth planet from the sun and is located between Mars and Uranus.",9.822421550750732
+4,What planet has the shortest orbital period?,Mercury,"1. The Earth is the third planet from the sun and takes approximately 365 days to complete one orbit around the sun. 2. Venus, the second planet from the sun, takes approximately 224 days to complete one orbit around the sun. 3. Mars, the fourth planet from the sun, takes approximately 149 days to complete one orbit around the sun.",13.771095514297485
+5,Which planet is the least dense?,Saturn,"1) The density of a planet is a measure of how much matter it contains per unit volume. 2) Density can be influenced by factors such as distance from the sun, atmospheric composition, and gravitational pull.",8.113471984863281
+6,What is the escape velocity of Mercury in km/s (rounded to one decimal place)?,4.3,"1. The escape velocity of Mercury is approximately 40 km/s.
+2. We need to find the escape velocity rounded to one decimal place.",7.673155784606934
+7,Which planet is the closest to the Sun?,Mercury,"2019-07-31
+Answer: Mercury",4.275122880935669
+8,Which planet has the strongest surface gravity?,Jupiter,1. The force of gravity is a fundamental force that causes all physical objects with mass or energy to be attracted to one another. 2. Gravity is what keeps planets in orbit around stars and moons in orbit around planets. 3. The strength of gravity depends on the mass of the object and the distance between them.,11.314979314804077
+9,Venus diameter is almost the same as the Earth. True or False?,True,"10.59 - 12.59 cm (4.13 - 5.98 inches)
+Answer: True",7.0509560108184814
+10,Which planet has a day longer than its year?,Venus,"2015 was the year when the International Astronomical Union (IAU) declared Pluto to be a ""dwarf planet"" instead of a full-sized planet.",7.203837633132935
