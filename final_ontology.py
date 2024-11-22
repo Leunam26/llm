@@ -186,6 +186,10 @@ with connect_to_db() as conn:
         cursor.execute("SELECT id, ground_truth, answer_orca, response_time_orca FROM final_ontology;")
         rows = cursor.fetchall()
 
+        total_f1 = 0
+        total_response_time = 0
+        count = 0
+
         for row in rows:
             id, ground_truth, answer_orca, time_response_orca = row
             f1_orca, em_orca = calculate_f1_and_exact(answer_orca, ground_truth)
@@ -196,8 +200,22 @@ with connect_to_db() as conn:
             mlflow.log_metric("em orca", em_orca, step=id)
             mlflow.log_metric("cgt orca", metric_contains_gt, step=id)
             mlflow.log_metric("response time", time_response_orca, step=id)
-            
+
+            total_f1 += f1_orca
+            total_response_time += time_response_orca
+            count += 1
+
             print(f"Logged F1: {f1_orca}, EM: {em_orca} for ID: {id}")
+
+        # Calcola le medie
+        avg_f1 = total_f1 / count if count > 0 else 0
+        avg_response_time = total_response_time / count if count > 0 else 0
+
+        # Logga le medie su MLflow
+        mlflow.log_metric("average f1 orca", avg_f1)
+        mlflow.log_metric("average response time", avg_response_time)
+
+        print(f"Logged average F1: {avg_f1}, average response time: {avg_response_time}.")
 
 print("F1 ed EM loggati su MLflow per ciascun ID.")
 
