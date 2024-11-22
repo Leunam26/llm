@@ -2,7 +2,6 @@ from gpt4all import GPT4All
 import psycopg2
 import json
 import time
-from rdflib import Graph
 import re
 import mlflow
 import pandas as pd
@@ -258,8 +257,7 @@ mlflow.pyfunc.log_model(
                     "numpy",
                     "psycopg2-binary",
                     "pandas",
-                    "gguf",
-                    "rdflib"
+                    "gguf"
                 ]
             }
         ],
