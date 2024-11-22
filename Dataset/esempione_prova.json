@@ -1,0 +1,28 @@
+[
+
+    {
+        "id": 1,
+        "question": "Which planet has the highest mean temperature?",
+        "ground_truth": "Venus"
+    },
+    {
+        "id": 2,
+        "question": "What is the only planet with a single moon?",
+        "ground_truth": "Earth"
+    },
+    {
+        "id": 3,
+        "question": "Which planet has the largest diameter in the Solar System?",
+        "ground_truth": "Jupiter"
+    },
+    {
+        "id": 4,
+        "question": "What planet has the shortest orbital period?",
+        "ground_truth": "Mercury"
+    },
+    {
+        "id": 5,
+        "question": "Which planet is the least dense?",
+        "ground_truth": "Saturn"
+    }
+]

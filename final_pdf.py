@@ -31,7 +31,7 @@ mlflow.log_param("library", "gpt4all")
 
 # Log specific run parameters
 mlflow.log_param("number_questions", 60) 
-mlflow.log_param("Dataset", "Planets and moons")
+mlflow.log_param("Dataset", "Astronomy for Mere Mortals v23")
 
 import os
 model_path = os.path.abspath("Modelli_gpt4all")

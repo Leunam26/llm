@@ -11,7 +11,7 @@ from langchain.prompts import PromptTemplate
 
 
 # Set our tracking server uri for logging
-mlflow.set_tracking_uri(uri="http://localhost:5000")
+mlflow.set_tracking_uri(uri="http://16.171.132.68:5000")
 mlflow.set_experiment(experiment_name='Final example')
 mlflow.start_run(run_name='Planets and moons - Spreadsheet')
 run_id = mlflow.active_run().info.run_id
@@ -31,8 +31,8 @@ mlflow.log_param("Dataset", "Planets and moons")
 # Impostare la connessione al database
 def connect_to_db():
     return psycopg2.connect(
-        host="localhost",  
-        database="rag_ontology_evaluation",  
+        host="16.171.132.68",  
+        database="final_example",  
         user="postgres",  
         password="1234"  
     )
@@ -83,10 +83,10 @@ def create_table():
     with connect_to_db() as conn:
         with conn.cursor() as cursor:
             # Elimina la tabella se esiste già
-            cursor.execute("DROP TABLE IF EXISTS qa_results;")
+            cursor.execute("DROP TABLE IF EXISTS final_spreadsheet;")
             # Creazione tabella (se non esiste)
             cursor.execute("""
-                CREATE TABLE IF NOT EXISTS qa_results (
+                CREATE TABLE IF NOT EXISTS final_spreadsheet (
                     id SERIAL PRIMARY KEY,
                     question TEXT,
                     answer_orca TEXT,
@@ -106,7 +106,7 @@ for question_item in questions:
     with connect_to_db() as conn:
         with conn.cursor() as cursor:
             cursor.execute("""
-                INSERT INTO qa_results (question, answer_orca, response_time_orca)
+                INSERT INTO final_spreadsheet (question, answer_orca, response_time_orca)
                 VALUES (%s, %s, %s);
             """, (question, 
                   responses.get("orca"), responses.get("time_orca")))
@@ -122,7 +122,7 @@ print("Processo completato e risultati salvati nel database PostgreSQL.")
 with connect_to_db() as conn:
     with conn.cursor() as cursor:
         try:
-            cursor.execute("ALTER TABLE qa_results ADD COLUMN ground_truth TEXT;")
+            cursor.execute("ALTER TABLE final_spreadsheet ADD COLUMN ground_truth TEXT;")
             conn.commit()
         except psycopg2.errors.DuplicateColumn:
             conn.rollback()
@@ -131,20 +131,20 @@ with connect_to_db() as conn:
         for item in questions:
             answer_value = "; ".join(item["ground_truth"]) if isinstance(item["ground_truth"], list) else item["ground_truth"]
             cursor.execute(
-                "UPDATE qa_results SET ground_truth = %s WHERE question = %s;",
+                "UPDATE final_spreadsheet SET ground_truth = %s WHERE question = %s;",
                 (answer_value, item["question"].strip())
             )
         conn.commit()
 
-# Esporta la tabella `qa_results` in un file CSV
+# Esporta la tabella `final_spreadsheet` in un file CSV
 with connect_to_db() as conn:
-    query = "SELECT * FROM qa_results;"
+    query = "SELECT * FROM final_spreadsheet;"
     df = pd.read_sql_query(query, conn)
-    csv_path = os.path.join(dataset_path, "qa_results.csv")
+    csv_path = os.path.join(dataset_path, "final_spreadsheet.csv")
     df.to_csv(csv_path, index=False)
 
 mlflow.log_artifact(csv_path)
-print(f"File CSV `qa_results.csv` salvato come artefatto su MLflow.")
+print(f"File CSV `final_spreadsheet.csv` salvato come artefatto su MLflow.")
 
 
 
@@ -190,7 +190,7 @@ def contains_ground_truth(predicted, ground_truth):
 with connect_to_db() as conn:
     with conn.cursor() as cursor:
         # Seleziona `id` insieme a `ground_truth`, `answer_orca` e `response_time_orca`
-        cursor.execute("SELECT id, ground_truth, answer_orca, response_time_orca FROM qa_results;")
+        cursor.execute("SELECT id, ground_truth, answer_orca, response_time_orca FROM final_spreadsheet;")
         rows = cursor.fetchall()
 
         total_f1 = 0
