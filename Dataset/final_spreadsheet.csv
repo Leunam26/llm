@@ -1,0 +1,8 @@
+id,question,answer_orca,response_time_orca,ground_truth
+1,Which planet has the highest mean temperature?," The planet with the highest mean temperature is Venus, which has a mean temperature of approximately 734 Kelvin (K).",16.37566113471985,Venus
+2,What is the only planet with a single moon?, The only planet with a single moon is Mercury.,17.04141855239868,Earth
+3,Which planet has the largest diameter in the Solar System?, The planet with the largest diameter in the Solar System is Jupiter.,18.340120792388916,Jupiter
+4,What planet has the shortest orbital period?, The planet with the shortest orbital period is Mercury.,17.76478886604309,Mercury
+5,Which planet is the least dense?," 
+
+L'obiettivo di questo contesto è quello di trovare la domanda più difficile da rispondere.",21.503417491912842,Saturn

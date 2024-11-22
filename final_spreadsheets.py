@@ -7,10 +7,10 @@ import mlflow
 import pandas as pd
 
 from langchain.prompts import PromptTemplate
-
+from transformers import AutoTokenizer
 
 # Set our tracking server uri for logging
-mlflow.set_tracking_uri(uri="http://16.171.132.68:5000")
+#mlflow.set_tracking_uri(uri="http://localhost:5000")
 mlflow.set_experiment(experiment_name='Final example')
 mlflow.start_run(run_name='Planets and moons - Spreadsheet')
 run_id = mlflow.active_run().info.run_id
@@ -60,20 +60,27 @@ def retrieve_context(question):
     context = pd.concat([planets_results, satellites_results]).to_string(index=False)
     return context if context else "No relevant information found."
 
+tokenizer = AutoTokenizer.from_pretrained("huggyllama/llama-7b")
+
+
 # Funzione principale per generare risposte
 def generate_responses(question):
     context = retrieve_context(question)
     prompt = prompt_template.format(question=question, context=context)
 
+        # Tokenizzazione per limitare il prompt a 2048 token
+    tokens = tokenizer.encode(prompt, truncation=True, max_length=2048, return_tensors="pt")
+    truncated_prompt = tokenizer.decode(tokens[0], skip_special_tokens=True)
+
     responses = {}
     start_time = time.time()
-    responses["orca"] = model_orca.generate(prompt)
+    responses["orca"] = model_orca.generate(truncated_prompt)
     responses["time_orca"] = time.time() - start_time
 
     return responses
 
 # Carica il file JSON con le domande
-with open(os.path.join(dataset_path, "esempione.json")) as f:
+with open(os.path.join(dataset_path, "esempione_prova.json")) as f:
     questions = json.load(f)
 
 
