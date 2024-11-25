@@ -9,7 +9,7 @@ import pandas as pd
 import re
 
 # Set our tracking server uri for logging
-mlflow.set_tracking_uri(uri="http://localhost:5000")
+#mlflow.set_tracking_uri(uri="http://localhost:5000")
 mlflow.set_experiment(experiment_name='Final example')
 mlflow.start_run(run_name='Planets and moons - Wiki API')
 run_id = mlflow.active_run().info.run_id
@@ -105,7 +105,7 @@ create_table()
 # Funzione principale
 def main():
     # Caricamento delle domande dal file JSON
-    with open(os.path.join(dataset_path, "esempione_prova.json")) as f:
+    with open(os.path.join(dataset_path, "esempione.json")) as f:
         questions = json.load(f)
 
     # Inizializzazione della connessione al database
