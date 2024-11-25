@@ -49,10 +49,10 @@ def connect_to_db():
 def create_table():
     with connect_to_db() as conn:
         with conn.cursor() as cursor:
-            cursor.execute("DROP TABLE IF EXISTS qa_pdf_results;")
+            cursor.execute("DROP TABLE IF EXISTS final_pdf;")
 
             cursor.execute("""
-                CREATE TABLE IF NOT EXISTS qa_pdf_results (
+                CREATE TABLE IF NOT EXISTS final_pdf (
                     id SERIAL PRIMARY KEY,
                     question TEXT,
                     answer_orca TEXT,
@@ -189,7 +189,7 @@ for question_item in questions:
     with connect_to_db() as conn:
         with conn.cursor() as cursor:
             cursor.execute("""
-                INSERT INTO qa_pdf_results (question, answer_orca, response_time_orca)
+                INSERT INTO final_pdf (question, answer_orca, response_time_orca)
                 VALUES (%s, %s, %s);
             """, (question, 
                   responses.get("Orca"), responses.get("time_Orca")))
@@ -201,7 +201,7 @@ for question_item in questions:
 with connect_to_db() as conn:
     with conn.cursor() as cursor:
         try:
-            cursor.execute("ALTER TABLE qa_pdf_results ADD COLUMN ground_truth TEXT;")
+            cursor.execute("ALTER TABLE final_pdf ADD COLUMN ground_truth TEXT;")
             conn.commit()
         except psycopg2.errors.DuplicateColumn:
             conn.rollback()
@@ -210,20 +210,20 @@ with connect_to_db() as conn:
         for item in questions:
             answer_value = "; ".join(item["ground_truth"]) if isinstance(item["ground_truth"], list) else item["ground_truth"]
             cursor.execute(
-                "UPDATE qa_pdf_results SET ground_truth = %s WHERE question = %s;",
+                "UPDATE final_pdf SET ground_truth = %s WHERE question = %s;",
                 (answer_value, item["question"].strip())
             )
         conn.commit()
 
-# Esporta la tabella `qa_pdf_results` in un file CSV
+# Esporta la tabella `final_pdf` in un file CSV
 with connect_to_db() as conn:
-    query = "SELECT * FROM qa_pdf_results;"
+    query = "SELECT * FROM final_pdf;"
     df = pd.read_sql_query(query, conn)
-    csv_path = os.path.join(dataset_path, "qa_pdf_results.csv")
+    csv_path = os.path.join(dataset_path, "final_pdf.csv")
     df.to_csv(csv_path, index=False)
 
 mlflow.log_artifact(csv_path)
-print(f"File CSV `qa_pdf_results.csv` salvato come artefatto su MLflow.")
+print(f"File CSV `final_pdf.csv` salvato come artefatto su MLflow.")
 
 # CALCOLA F1 ed EM ################
 
@@ -267,11 +267,12 @@ def contains_ground_truth(predicted, ground_truth):
 with connect_to_db() as conn:
     with conn.cursor() as cursor:
         # Seleziona `id` insieme a `ground_truth`, `answer_orca` e `response_time_orca`
-        cursor.execute("SELECT id, ground_truth, answer_orca, response_time_orca FROM qa_pdf_results;")
+        cursor.execute("SELECT id, ground_truth, answer_orca, response_time_orca FROM final_pdf;")
         rows = cursor.fetchall()
 
         total_f1 = 0
         total_response_time = 0
+        total_contains_gt = 0
         count = 0
 
         for row in rows:
@@ -287,6 +288,8 @@ with connect_to_db() as conn:
 
             total_f1 += f1_orca
             total_response_time += response_time_orca
+            total_contains_gt += metric_contains_gt
+
             count += 1
 
             print(f"Logged F1: {f1_orca}, EM: {em_orca} for ID: {id}")
@@ -295,8 +298,10 @@ with connect_to_db() as conn:
         avg_f1 = total_f1 / count if count > 0 else 0
         avg_response_time = total_response_time / count if count > 0 else 0
 
+        mlflow.log_metric("total cgt", total_contains_gt)
+
         # Logga le medie su MLflow
-        mlflow.log_metric("average f1 orca", avg_f1)
+        mlflow.log_metric("average f1", avg_f1)
         mlflow.log_metric("average response time", avg_response_time)
 
         print(f"Logged average F1: {avg_f1}, average response time: {avg_response_time}.")

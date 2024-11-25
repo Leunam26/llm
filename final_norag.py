@@ -2,7 +2,6 @@ from gpt4all import GPT4All
 import psycopg2
 import json
 import time
-from rdflib import Graph
 import re
 import mlflow
 import pandas as pd
@@ -11,7 +10,7 @@ from langchain.prompts import PromptTemplate
 
 
 # Set our tracking server uri for logging
-mlflow.set_tracking_uri(uri="http://localhost:5000")
+mlflow.set_tracking_uri(uri="http://13.51.172.225:5000")
 mlflow.set_experiment(experiment_name='Final example')
 mlflow.start_run(run_name='Planets and moons - No RAG')
 run_id = mlflow.active_run().info.run_id
@@ -68,10 +67,10 @@ def create_table():
     with connect_to_db() as conn:
         with conn.cursor() as cursor:
             # Elimina la tabella se esiste già
-            cursor.execute("DROP TABLE IF EXISTS qa_results;")
+            cursor.execute("DROP TABLE IF EXISTS final_norag;")
             # Creazione tabella (se non esiste)
             cursor.execute("""
-                CREATE TABLE IF NOT EXISTS qa_results (
+                CREATE TABLE IF NOT EXISTS final_norag (
                     id SERIAL PRIMARY KEY,
                     question TEXT,
                     answer_orca TEXT,
@@ -91,7 +90,7 @@ for question_item in questions:
     with connect_to_db() as conn:
         with conn.cursor() as cursor:
             cursor.execute("""
-                INSERT INTO qa_results (question, answer_orca, response_time_orca)
+                INSERT INTO final_norag (question, answer_orca, response_time_orca)
                 VALUES (%s, %s, %s);
             """, (question, 
                   responses.get("orca"), responses.get("time_orca")))
@@ -107,7 +106,7 @@ print("Processo completato e risultati salvati nel database PostgreSQL.")
 with connect_to_db() as conn:
     with conn.cursor() as cursor:
         try:
-            cursor.execute("ALTER TABLE qa_results ADD COLUMN ground_truth TEXT;")
+            cursor.execute("ALTER TABLE final_norag ADD COLUMN ground_truth TEXT;")
             conn.commit()
         except psycopg2.errors.DuplicateColumn:
             conn.rollback()
@@ -116,20 +115,20 @@ with connect_to_db() as conn:
         for item in questions:
             answer_value = "; ".join(item["ground_truth"]) if isinstance(item["ground_truth"], list) else item["ground_truth"]
             cursor.execute(
-                "UPDATE qa_results SET ground_truth = %s WHERE question = %s;",
+                "UPDATE final_norag SET ground_truth = %s WHERE question = %s;",
                 (answer_value, item["question"].strip())
             )
         conn.commit()
 
-# Esporta la tabella `qa_results` in un file CSV
+# Esporta la tabella `final_norag` in un file CSV
 with connect_to_db() as conn:
-    query = "SELECT * FROM qa_results;"
+    query = "SELECT * FROM final_norag;"
     df = pd.read_sql_query(query, conn)
-    csv_path = os.path.join(dataset_path, "qa_results.csv")
+    csv_path = os.path.join(dataset_path, "final_norag.csv")
     df.to_csv(csv_path, index=False)
 
 mlflow.log_artifact(csv_path)
-print(f"File CSV `qa_results.csv` salvato come artefatto su MLflow.")
+print(f"File CSV `final_norag.csv` salvato come artefatto su MLflow.")
 
 
 
@@ -175,8 +174,13 @@ def contains_ground_truth(predicted, ground_truth):
 with connect_to_db() as conn:
     with conn.cursor() as cursor:
         # Seleziona `id` insieme a `ground_truth` e `answer_orca`
-        cursor.execute("SELECT id, ground_truth, answer_orca, response_time_orca FROM qa_results;")
+        cursor.execute("SELECT id, ground_truth, answer_orca, response_time_orca FROM final_norag;")
         rows = cursor.fetchall()
+
+        total_f1 = 0
+        total_response_time = 0
+        total_contains_gt = 0
+        count = 0
 
         for row in rows:
             id, ground_truth, answer_orca, response_time_orca = row
@@ -189,7 +193,23 @@ with connect_to_db() as conn:
             mlflow.log_metric("cgt orca", metric_contains_gt, step=id)
             mlflow.log_metric("response time", response_time_orca, step=id)
             
+            total_f1 += f1_orca
+            total_response_time += response_time_orca
+            total_contains_gt += metric_contains_gt
+            count += 1
+
             print(f"Logged F1: {f1_orca}, EM: {em_orca} for ID: {id}")
+
+        # Calcola le medie
+        avg_f1 = total_f1 / count if count > 0 else 0
+        avg_response_time = total_response_time / count if count > 0 else 0
+
+        mlflow.log_metric("total cgt", total_contains_gt)
+
+        # Logga le medie su MLflow
+        mlflow.log_metric("average f1", avg_f1)
+        mlflow.log_metric("average response time", avg_response_time)
+
 
 print("F1 ed EM loggati su MLflow per ciascun ID.")
 

@@ -212,7 +212,7 @@ with connect_to_db() as conn:
         avg_response_time = total_response_time / count if count > 0 else 0
 
         # Logga le medie su MLflow
-        mlflow.log_metric("average f1 orca", avg_f1)
+        mlflow.log_metric("average f1", avg_f1)
         mlflow.log_metric("average response time", avg_response_time)
 
         print(f"Logged average F1: {avg_f1}, average response time: {avg_response_time}.")

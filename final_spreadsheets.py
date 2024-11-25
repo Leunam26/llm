@@ -60,7 +60,7 @@ def retrieve_context(question):
     context = pd.concat([planets_results, satellites_results]).to_string(index=False)
     return context if context else "No relevant information found."
 
-tokenizer = AutoTokenizer.from_pretrained("huggyllama/llama-7b")
+tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
 
 
 # Funzione principale per generare risposte
