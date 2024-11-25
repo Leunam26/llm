@@ -10,7 +10,7 @@ from langchain.prompts import PromptTemplate
 
 
 # Set our tracking server uri for logging
-mlflow.set_tracking_uri(uri="http://13.51.172.225:5000")
+#mlflow.set_tracking_uri(uri="http://13.51.172.225:5000")
 mlflow.set_experiment(experiment_name='Final example')
 mlflow.start_run(run_name='Planets and moons - No RAG')
 run_id = mlflow.active_run().info.run_id

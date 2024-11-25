@@ -8,7 +8,7 @@ import mlflow
 import pandas as pd
 
 # Set our tracking server uri for logging
-mlflow.set_tracking_uri(uri="http://16.171.132.68:5000")
+#mlflow.set_tracking_uri(uri="http://16.171.132.68:5000")
 mlflow.set_experiment(experiment_name='Final example')
 mlflow.start_run(run_name='Planets and satellites - Ontology')
 run_id = mlflow.active_run().info.run_id
