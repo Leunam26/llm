@@ -188,6 +188,8 @@ with connect_to_db() as conn:
 
         total_f1 = 0
         total_response_time = 0
+        total_contains_gt = 0
+
         count = 0
 
         for row in rows:
@@ -203,6 +205,9 @@ with connect_to_db() as conn:
 
             total_f1 += f1_orca
             total_response_time += time_response_orca
+            total_contains_gt += metric_contains_gt
+
+
             count += 1
 
             print(f"Logged F1: {f1_orca}, EM: {em_orca} for ID: {id}")
@@ -210,6 +215,8 @@ with connect_to_db() as conn:
         # Calcola le medie
         avg_f1 = total_f1 / count if count > 0 else 0
         avg_response_time = total_response_time / count if count > 0 else 0
+
+        mlflow.log_metric("total cgt", total_contains_gt)
 
         # Logga le medie su MLflow
         mlflow.log_metric("average f1", avg_f1)
