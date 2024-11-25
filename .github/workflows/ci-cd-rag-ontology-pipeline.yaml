@@ -1,9 +1,9 @@
 name: CI/CD RAG Ontology Pipeline LLM
 
 on:
-#  push:
-#    branches:
-#      - master
+  push:
+    branches:
+      - master
   pull_request:
     branches:
       - master
