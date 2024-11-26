@@ -1,9 +1,9 @@
 name: CI/CD RAG Pipeline LLM
 
 on:
-#  push:
-#    branches:
-#      - master
+  push:
+    branches:
+      - master
   pull_request:
     branches:
       - master
@@ -36,7 +36,7 @@ jobs:
           aws configure set default.region eu-north-1  
 # Check the MLflow Tracking Uri
       - name: Set MLFlow tracking URI
-        run: echo "MLFLOW_TRACKING_URI=http://13.60.194.87:5000" >> $GITHUB_ENV
+        run: echo "MLFLOW_TRACKING_URI=http://16.171.25.235:5000" >> $GITHUB_ENV
         
       - name: Pull DVC data
         run: dvc pull
@@ -48,7 +48,7 @@ jobs:
         run: ls -alh ./Modelli_gpt4all/
 
       - name: Run Python script
-        run: python rag_mlops.py
+        run: python final_pdf.py
         env:
           MLFLOW_TRACKING_URI: ${{ env.MLFLOW_TRACKING_URI }}
 
