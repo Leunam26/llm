@@ -17,7 +17,7 @@ import pandas as pd
 import re
 
 # Set our tracking server uri for logging #
-#mlflow.set_tracking_uri(uri="http://localhost:5000")
+mlflow.set_tracking_uri(uri="http://localhost:5000")
 mlflow.set_experiment(experiment_name='Final example')
 mlflow.start_run(run_name='Planets and moons - PDF')
 run_id = mlflow.active_run().info.run_id
@@ -44,8 +44,12 @@ def connect_to_db():
         database="final_example",  
         user="postgres",  
         password="1234",
-        options="-c keepalives=1 -c keepalives_idle=30 -c keepalives_interval=10 -c keepalives_count=5"
+        keepalives=1,
+        keepalives_idle=30,
+        keepalives_interval=10,
+        keepalives_count=5
     )
+
 
 def create_table():
     with connect_to_db() as conn:
@@ -62,6 +66,8 @@ def create_table():
             """)
             conn.commit()
 
+# Modifica della logica di esecuzione per salvare anche i tempi
+create_table()  # Creazione della tabella nel database
 
 # Funzione per salvare gradualmente le risposte nel database
 def save_to_db(result):
@@ -164,9 +170,6 @@ def ask_question_to_models(models, question, pdf_index):
     return responses  # Ritorna anche i tempi di risposta
 
 
-
-# Modifica della logica di esecuzione per salvare anche i tempi
-create_table()  # Creazione della tabella nel database
 
 #########################
 # Function to save the results to a CSV file
