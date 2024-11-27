@@ -40,7 +40,7 @@ dataset_path = os.path.abspath("Dataset")
 # Impostare la connessione al database
 def connect_to_db():
     return psycopg2.connect(
-        host="16.171.25.235",  
+        host="13.60.51.238",  
         database="final_example",  
         user="postgres",  
         password="1234"  

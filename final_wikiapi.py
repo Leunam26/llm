@@ -9,7 +9,7 @@ import pandas as pd
 import re
 
 # Set our tracking server uri for logging
-#mlflow.set_tracking_uri(uri="http://localhost:5000")
+mlflow.set_tracking_uri(uri="http://localhost:5000")
 mlflow.set_experiment(experiment_name='Final example')
 mlflow.start_run(run_name='Planets and moons - Wiki API')
 run_id = mlflow.active_run().info.run_id
@@ -76,7 +76,7 @@ qa_orca = RetrievalQA(orca, retriever)
 # Configurazione della connessione al database PostgreSQL
 def connect_to_db():
     return psycopg2.connect(
-        host="13.51.172.225",
+        host="localhost",
         database="final_example",
         user="postgres",
         password="1234"
