@@ -177,25 +177,20 @@ def save_to_csv(file_path, data):
 results_data = []
 #########################
 
-for question_item in questions:
-    question = question_item["question"].strip()
-    
-    # Ottieni le risposte dai modelli e i tempi di risposta
-    responses = ask_question_to_models(models, question, pdf_index)
-    
-    print("DEBUG - Responses:", responses)
-
-    # Salva le risposte nel database
-    with connect_to_db() as conn:
-        with conn.cursor() as cursor:
+with connect_to_db() as conn:
+    with conn.cursor() as cursor:
+        for question_item in questions:
+            question = question_item["question"].strip()
+            responses = ask_question_to_models(models, question, pdf_index)
+            
             cursor.execute("""
                 INSERT INTO final_pdf (question, answer_orca, response_time_orca)
                 VALUES (%s, %s, %s);
             """, (question, 
                   responses.get("Orca"), responses.get("time_Orca")))
-            conn.commit()
+        conn.commit()
+        print(f"Saved response and times for question ID to the database.") 
 
-    print(f"Saved response and times for question ID to the database.") 
 
 # Aggiungi una nuova colonna ground_truth alla tabella
 with connect_to_db() as conn:
