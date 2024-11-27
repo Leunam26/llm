@@ -52,7 +52,7 @@ jobs:
         env:
           MLFLOW_TRACKING_URI: ${{ env.MLFLOW_TRACKING_URI }}
 
-################################# Free disk space
+################################## Free disk space
 
       - name: Free disk space
         run: |
