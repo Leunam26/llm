@@ -43,7 +43,8 @@ def connect_to_db():
         host="13.60.51.238",  
         database="final_example",  
         user="postgres",  
-        password="1234"  
+        password="1234",
+        options="-c keepalives=1 -c keepalives_idle=30 -c keepalives_interval=10 -c keepalives_count=5"
     )
 
 def create_table():
@@ -183,18 +184,10 @@ with connect_to_db() as conn:
             question = question_item["question"].strip()
             try:
                 responses = ask_question_to_models(models, question, pdf_index)
-
-                # Recupera le risposte con valori di fallback per evitare None
-                answer_orca = responses.get("orca", "")
-                response_time_orca = responses.get("time_orca", 0)
-
-                # Stampa di debug per monitorare l'andamento del ciclo
-                print(f"Processing question: {question}")
-
                 cursor.execute("""
                     INSERT INTO final_pdf (question, answer_orca, response_time_orca)
                     VALUES (%s, %s, %s);
-                """, (question, answer_orca, response_time_orca))
+                """, (question, responses.get("orca"), responses.get("time_orca")))
             except Exception as e:
                 print(f"Error processing question: {question}. Exception: {e}")
                 continue
