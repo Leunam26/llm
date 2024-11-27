@@ -181,15 +181,23 @@ with connect_to_db() as conn:
     with conn.cursor() as cursor:
         for question_item in questions:
             question = question_item["question"].strip()
-            responses = ask_question_to_models(models, question, pdf_index)
-            
-            cursor.execute("""
-                INSERT INTO final_pdf (question, answer_orca, response_time_orca)
-                VALUES (%s, %s, %s);
-            """, (question, 
-                  responses.get("Orca"), responses.get("time_Orca")))
-        conn.commit()
-        print(f"Saved response and times for question ID to the database.") 
+            try:
+                responses = ask_question_to_models(models, question, pdf_index)
+
+                # Recupera le risposte con valori di fallback per evitare None
+                answer_orca = responses.get("orca", "")
+                response_time_orca = responses.get("time_orca", 0)
+
+                # Stampa di debug per monitorare l'andamento del ciclo
+                print(f"Processing question: {question}")
+
+                cursor.execute("""
+                    INSERT INTO final_pdf (question, answer_orca, response_time_orca)
+                    VALUES (%s, %s, %s);
+                """, (question, answer_orca, response_time_orca))
+            except Exception as e:
+                print(f"Error processing question: {question}. Exception: {e}")
+                continue
 
 
 # Aggiungi una nuova colonna ground_truth alla tabella
