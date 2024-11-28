@@ -40,7 +40,7 @@ dataset_path = os.path.abspath("Dataset")
 # Impostare la connessione al database
 def connect_to_db():
     return psycopg2.connect(
-        host="16.170.208.177",  
+        host="13.60.31.98",  
         database="final_example",  
         user="postgres",  
         password="1234",
@@ -61,7 +61,8 @@ def create_table():
                     id SERIAL PRIMARY KEY,
                     question TEXT,
                     answer_orca TEXT,
-                    response_time_orca FLOAT
+                    response_time_orca FLOAT,
+                    ground_truth TEXT                    
                 );
             """)
             conn.commit()
@@ -71,18 +72,30 @@ create_table()  # Creazione della tabella nel database
 
 # Funzione per salvare gradualmente le risposte nel database
 def save_to_db(result):
-    with connect_to_db() as conn:
-        with conn.cursor() as cursor:
-            # Inserimento dati nel database
-            cursor.execute("""
-                INSERT INTO model_rag_responses_se (question, answer_orca, response_time_orca)
-                VALUES (%s, %s, %s);
-                """, (
-            result["question"],
-            result["answer_orca"],
-            result["response_time_orca"]
-        ))
-            conn.commit()
+    conn = psycopg2.connect(
+        host="13.60.31.98",
+        database="final_example",
+        user="postgres",
+        password="1234"
+    )
+    cursor = conn.cursor()
+
+    # Inserimento dati nel database
+    cursor.execute("""
+        INSERT INTO final_pdf (id, question, ground_truth, answer_orca, response_time_orca)
+        VALUES (%s, %s, %s, %s, %s);
+    """, (
+        result["id"],
+        result["question"],
+        result["ground_truth"],
+        result["answer_orca"],
+        result["response_time_orca"]
+    ))
+
+    # Esegui il commit e chiudi la connessione
+    conn.commit()
+    cursor.close()
+    conn.close()
 
 
 # Caricamento dei PDF e creazione di un indice di vettori
@@ -119,56 +132,51 @@ tokenizer = AutoTokenizer.from_pretrained("allenai/longformer-base-4096")
 
 
 def ask_question_to_models(models, question, pdf_index):
-    
     context = pdf_index.similarity_search(question, k=3)
     context_text = " ".join([doc.page_content for doc in context])
 
     # Tokenizza il contesto per verificare la lunghezza
     context_tokens = tokenizer(context_text)["input_ids"]
-    
-    
-    
+
     # Limita il numero di token totali (per esempio, 2048 - lunghezza della domanda)
     max_context_tokens = 1800  # Lascia un margine per la domanda
     if len(context_tokens) > max_context_tokens:
         # Ritaglia il contesto per non eccedere i 1800 token
         context_text = tokenizer.decode(context_tokens[:max_context_tokens])
-    
+
     # Fai domanda a ogni modello
     responses = {}
     response_times = {}  # Dizionario per salvare i tempi di risposta
     for model_name, model in models.items():
         prompt = f"Context: {context_text}\nQuestion: {question}\nAnswer:"
-        
+
         # Misurazione del tempo di inizio
         start_time = time.time()
-        
+
         # Utilizza il metodo generate per ottenere la risposta
         response = model.generate(prompt)
-        
+
         # Misurazione del tempo di fine
         end_time = time.time()
-        
+
         # Calcola il tempo di risposta
         response_time = end_time - start_time
-        
+        response_times[model_name] = response_time
+
         # Verifica se la risposta è una stringa o un dizionario
         if isinstance(response, str):
-            response_text = response
+            responses[model_name] = response
         elif isinstance(response, dict) and "choices" in response:
-            response_text = response["choices"][0]["text"]
+            responses[model_name] = response["choices"][0]["text"]
         else:
-            response_text = "Error: Unexpected response format"
-
-        # Salva la risposta e il tempo nel dizionario `responses`
-        responses[f"{model_name}"] = response_text
-        responses[f"time_{model_name}"] = response_time
+            responses[model_name] = "Error: Unexpected response format"
 
         # Stampa il progresso della risposta e il tempo impiegato
-        print(f"Model: {model_name} - Question: {question[:30]}... - Response: {response_text[:50]}... - Time: {response_time:.2f} seconds")
+        print(f"Model: {model_name} - Question: {question[:30]}... - Response: {responses[model_name][:50]}... - Time: {response_time:.2f} seconds")
 
-    return responses  # Ritorna anche i tempi di risposta
+    return responses, response_times  # Ritorna anche i tempi di risposta
 
+start_id = 0  # ID di partenza
 
 
 #########################
@@ -181,38 +189,51 @@ def save_to_csv(file_path, data):
 results_data = []
 #########################
 
-with connect_to_db() as conn:
-    with conn.cursor() as cursor:
-        for question_item in questions:
-            question = question_item["question"].strip()
-            try:
-                responses = ask_question_to_models(models, question, pdf_index)
-                cursor.execute("""
-                    INSERT INTO final_pdf (question, answer_orca, response_time_orca)
-                    VALUES (%s, %s, %s);
-                """, (question, responses.get("orca"), responses.get("time_orca")))
-            except Exception as e:
-                print(f"Error processing question: {question}. Exception: {e}")
-                continue
+for question in questions:
+    q_id = question["id"]
+    if q_id < start_id:
+        continue  # Salta le domande con ID minore di start_id
+    
+    q_text = question["question"]
+    ground_truth = question["ground_truth"]
+    print(f"Processing Question ID: {q_id} - {q_text[:50]}...")  # Messaggio di inizio per ogni domanda
+
+    # Ottieni le risposte dai modelli e i tempi di risposta
+    responses, response_times = ask_question_to_models(models, q_text, pdf_index)
+
+    # Prepara il dizionario per salvare i risultati di ogni modello
+    result = {
+        "id": q_id,
+        "question": q_text,
+        "ground_truth": ground_truth,
+        "answer_orca": responses.get("Orca", ""),
+        "response_time_orca": response_times.get("Orca", 0)
+    }
+
+    # Salva la risposta e i tempi nel database per la domanda corrente
+    save_to_db(result)
+    print(f"Saved response and times for question ID {q_id} to the database.")
+
+print("Processo completato e risultati salvati nel database PostgreSQL.")
 
 
 # Aggiungi una nuova colonna ground_truth alla tabella
-with connect_to_db() as conn:
-    with conn.cursor() as cursor:
-        try:
-            cursor.execute("ALTER TABLE final_pdf ADD COLUMN ground_truth TEXT;")
-            conn.commit()
-        except psycopg2.errors.DuplicateColumn:
-            conn.rollback()
+#with connect_to_db() as conn:
+#    with conn.cursor() as cursor:
+#        try:
+#            cursor.execute("ALTER TABLE final_pdf ADD COLUMN ground_truth TEXT;")
+#            conn.commit()
+#        except psycopg2.errors.DuplicateColumn:
+#            conn.rollback()
 
         # Aggiorna la tabella con i valori ground_truth
-        for item in questions:
-            answer_value = "; ".join(item["ground_truth"]) if isinstance(item["ground_truth"], list) else item["ground_truth"]
-            cursor.execute(
-                "UPDATE final_pdf SET ground_truth = %s WHERE question = %s;",
-                (answer_value, item["question"].strip())
-            )
-        conn.commit()
+##        for item in questions:
+#            answer_value = "; ".join(item["ground_truth"]) if isinstance(item["ground_truth"], list) else item["ground_truth"]
+#            cursor.execute(
+#                "UPDATE final_pdf SET ground_truth = %s WHERE question = %s;",
+#                (answer_value, item["question"].strip())
+#            )
+#        conn.commit()
 
 # Esporta la tabella `final_pdf` in un file CSV
 with connect_to_db() as conn:

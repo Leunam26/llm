@@ -36,7 +36,7 @@ jobs:
           aws configure set default.region eu-north-1  
 # Check the MLflow Tracking Uri
       - name: Set MLFlow tracking URI
-        run: echo "MLFLOW_TRACKING_URI=http://16.170.208.177:5000" >> $GITHUB_ENV
+        run: echo "MLFLOW_TRACKING_URI=http://13.60.31.98:5000" >> $GITHUB_ENV
         
       - name: Pull DVC data
         run: dvc pull

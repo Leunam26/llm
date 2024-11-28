@@ -1,0 +1,15 @@
+artifact_uri: file:///C:/Users/mnico/Documents/GitHub/llm/mlruns/656668029395101959/66d40e67dc674b01a1a102e03d1da49f/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '656668029395101959'
+lifecycle_stage: active
+run_id: 66d40e67dc674b01a1a102e03d1da49f
+run_name: Planets and moons - PDF
+run_uuid: 66d40e67dc674b01a1a102e03d1da49f
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1732741553456
+status: 1
+tags: []
+user_id: mnico
