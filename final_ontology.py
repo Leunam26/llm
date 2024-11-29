@@ -10,7 +10,7 @@ import pandas as pd
 # Set our tracking server uri for logging
 #mlflow.set_tracking_uri(uri="http://16.171.132.68:5000")
 mlflow.set_experiment(experiment_name='Final example')
-mlflow.start_run(run_name='Planets and satellites - Ontology')
+mlflow.start_run(run_name='Planets and satellites - Ontology 2')
 run_id = mlflow.active_run().info.run_id
 mlflow.set_tag("Training Info", "Run Orca with RAG on planets and moons ontology file")
 
@@ -28,7 +28,7 @@ mlflow.log_param("Dataset", "Planets and moons")
 # Impostare la connessione al database
 def connect_to_db():
     return psycopg2.connect(
-        host="13.51.172.225",  
+        host="13.53.40.47",  
         database="final_example",  
         user="postgres",  
         password="1234"  
@@ -68,9 +68,7 @@ def retrieve_context(graph, question):
 
 
 # Connect to RDF file
-rdf_graph_1 = load_rdf_data(os.path.join(dataset_path, "ontology_files", "planets.rdf"))
-rdf_graph_2 = load_rdf_data(os.path.join(dataset_path, "ontology_files", "satellites.rdf"))
-rdf_graph = rdf_graph_1 + rdf_graph_2
+rdf_graph = load_rdf_data(os.path.join(dataset_path, "ontology_files", "ontologia_completa.rdf"))
 
 def create_table():
     # Crea una connessione al database
