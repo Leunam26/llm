@@ -53,25 +53,18 @@ def load_rdf_data(rdf_file_path):
 
 
 def retrieve_context(graph, question):
-    from rdflib.plugins.sparql import prepareQuery
-    
-    # Query parametrizzata per sicurezza
-    query = prepareQuery("""
+    # Customize the SPARQL query to extract relevant info based on the question
+    # Example: find triples that match certain keywords
+    query = """
     SELECT ?subject ?predicate ?object
     WHERE {
         ?subject ?predicate ?object .
-        FILTER(CONTAINS(LCASE(STR(?object)), LCASE(?question_text)))
+        FILTER(CONTAINS(LCASE(STR(?object)), LCASE("{question_text}")))
     }
-    """)
-    
-    # Esegui la query
-    results = graph.query(query, initBindings={'question_text': question})
-    
-    # Organizza il contesto
-    context = [{"subject": str(row.subject), "predicate": str(row.predicate), "object": str(row.object)}
-               for row in results]
+    """.replace("{question_text}", question)
+    results = graph.query(query)
+    context = " ".join([str(row.object) for row in results])
     return context
-
 
 
 # Connect to RDF file
@@ -135,7 +128,7 @@ process_questions(questions, rdf_graph)
 print(f"Saved response and times for question ID {id} to the database.")
 print("Processing complete, results saved to database.")
 
-# Esporta la tabella `qa_results` in un file CSV #
+# Esporta la tabella `qa_results` in un file CSV
 with connect_to_db() as conn:
     query = "SELECT * FROM final_ontology;"
     df = pd.read_sql_query(query, conn)
