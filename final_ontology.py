@@ -135,7 +135,7 @@ process_questions(questions, rdf_graph)
 print(f"Saved response and times for question ID {id} to the database.")
 print("Processing complete, results saved to database.")
 
-# Esporta la tabella `qa_results` in un file CSV
+# Esporta la tabella `qa_results` in un file CSV #
 with connect_to_db() as conn:
     query = "SELECT * FROM final_ontology;"
     df = pd.read_sql_query(query, conn)
