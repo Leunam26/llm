@@ -28,7 +28,7 @@ mlflow.log_param("Dataset", "Planets and moons")
 # Impostare la connessione al database
 def connect_to_db():
     return psycopg2.connect(
-        host="13.53.40.47",  
+        host="13.60.214.24",  
         database="final_example",  
         user="postgres",  
         password="1234"  
@@ -53,18 +53,25 @@ def load_rdf_data(rdf_file_path):
 
 
 def retrieve_context(graph, question):
-    # Customize the SPARQL query to extract relevant info based on the question
-    # Example: find triples that match certain keywords
-    query = """
+    from rdflib.plugins.sparql import prepareQuery
+    
+    # Query parametrizzata per sicurezza
+    query = prepareQuery("""
     SELECT ?subject ?predicate ?object
     WHERE {
         ?subject ?predicate ?object .
-        FILTER(CONTAINS(LCASE(STR(?object)), LCASE("{question_text}")))
+        FILTER(CONTAINS(LCASE(STR(?object)), LCASE(?question_text)))
     }
-    """.replace("{question_text}", question)
-    results = graph.query(query)
-    context = " ".join([str(row.object) for row in results])
+    """)
+    
+    # Esegui la query
+    results = graph.query(query, initBindings={'question_text': question})
+    
+    # Organizza il contesto
+    context = [{"subject": str(row.subject), "predicate": str(row.predicate), "object": str(row.object)}
+               for row in results]
     return context
+
 
 
 # Connect to RDF file
